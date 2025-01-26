@@ -117,52 +117,44 @@ hash_list::hash_list(const hash_list &other) {
 // Assignment Operator -> LHS Points To RHS With A Shallow Copy
 hash_list &hash_list::operator=(const hash_list &other) { 
 	// Deleting Original List
-	node* curr = this -> head;
+	node* curr = head;
 	while(curr != NULL) {
 		node* next = curr -> next;
-		this -> remove(curr -> key);
+		remove(curr -> key);
 		curr = next;
 	}
-
 	// Resetting State
-	this -> head = NULL;	
-	this -> iter_ptr = other.iter_ptr;
-	this -> size = 0;
-
+	head = NULL;	
+	size = 0;
 	// Tranferring Other List -> This
 	curr = other.head;
 	while(curr != NULL) {
-		this -> insert(curr -> key, curr -> value);	
+		insert(curr -> key, curr -> value);	
 		curr = curr -> next;
+	}
+	// Setting Iterator
+	if(other.iter_ptr == NULL) { 
+		iter_ptr = NULL; 
+	} else {
+		curr = head;
+		while(curr -> value != other.iter_ptr -> value) { curr = curr -> next; }
+		iter_ptr = curr;
 	}
 
 	return *this; 
 }
 
-void hash_list::reset_iter() {
-    if(this -> head == NULL) {
-        this -> iter_ptr = NULL;
-    } else {
-        this -> iter_ptr = this -> head;
-    }
-}
+void hash_list::reset_iter() { iter_ptr = head; }
 
 
 void hash_list::increment_iter() {
     if(this -> iter_ptr == NULL) { return; }
-
-    if(this -> iter_ptr -> next == NULL) {
-        this -> iter_ptr = NULL;
-    } else {
-        this -> iter_ptr = this -> iter_ptr -> next;
-    }
+    iter_ptr = iter_ptr -> next;
 }
 
 
 std::optional<std::pair<const int *, float *>> hash_list::get_iter_value() { 
-	if(this -> iter_ptr == NULL) {
-		return std::nullopt;
-	}
+	if(this -> iter_ptr == NULL) { return std::nullopt; }
 
 	std::pair<const int*, float*> pair(
 		&(this -> iter_ptr -> key), // Key Address
