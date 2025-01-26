@@ -97,20 +97,56 @@ hash_list::~hash_list() {
  * START Part 2
  *------------------------------------------------------------------------------------*/
 
-hash_list::hash_list(const hash_list &other) {}
+// Copy Constructor
+hash_list::hash_list(const hash_list &other) {	 
+    node* curr = other.head;
+    // Object Itself Is Stack Allocated But All Nodes Are Dynamic
+    while(curr != NULL) { 
+        this -> insert(curr -> key, curr -> value);
+        curr = curr -> next;
+    }
+}
 
+// Assignment Operator -> LHS Points To RHS With A Shallow Copy
 hash_list &hash_list::operator=(const hash_list &other) { return *this; }
 
-void hash_list::reset_iter() {}
+void hash_list::reset_iter() {
+    if(this -> head == NULL) {
+        this -> iter_ptr = NULL;
+    } else {
+        this -> iter_ptr = this -> head;
+    }
+}
 
 
-void hash_list::increment_iter() {}
+void hash_list::increment_iter() {
+    if(this -> iter_ptr == NULL) { return; }
+
+    if(this -> iter_ptr -> next == NULL) {
+        this -> iter_ptr = NULL;
+    } else {
+        this -> iter_ptr = this -> iter_ptr -> next;
+    }
+}
 
 
-std::optional<std::pair<const int *, float *>> hash_list::get_iter_value() { return std::nullopt; }
+std::optional<std::pair<const int *, float *>> hash_list::get_iter_value() { 
+    node* it = this -> iter_ptr;
+    std::pair<int*, float*> pair;
+
+    if(it != NULL) { 
+        pair.first = &(it -> key);
+        pair.second = &(it -> value);
+    }
+
+    return pair; 
+}
 
 
-bool hash_list::iter_at_end() { return false; }
+bool hash_list::iter_at_end() { 
+    if(this -> iter_ptr == NULL) { return true; }
+    return false; 
+}
 /**-----------------------------------------------------------------------------------
  * END Part 2
  *------------------------------------------------------------------------------------*/
