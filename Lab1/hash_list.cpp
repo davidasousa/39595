@@ -136,14 +136,14 @@ void hash_list::increment_iter() {
 
 
 std::optional<std::pair<const int *, float *>> hash_list::get_iter_value() { 
-    node* it = this -> iter_ptr;
-    std::pair<int*, float*> pair;
+	if(this -> iter_ptr == NULL) {
+		return std::nullopt;
+	}
 
-    if(it != NULL) { 
-        pair.first = &(it -> key);
-        pair.second = &(it -> value);
-    }
-
+	std::pair<const int*, float*> pair(
+		&(this -> iter_ptr -> key), // Key Address
+		&(this -> iter_ptr -> value) // Value Address
+	);
     return pair; 
 }
 
