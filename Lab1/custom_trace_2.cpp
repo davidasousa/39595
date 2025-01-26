@@ -37,6 +37,24 @@ int custom_trace_2()
 	if(list.iter_at_end() == false) { return 1; }
 	if(list.get_iter_value().has_value() == true) { return 1; }
 
+	// Incrementing Null Iterator
+	list.increment_iter();
+	if(list.iter_at_end() == false) { return 1; }
+
+	// Resetting Iterator
+	list.reset_iter();
+	if(*(list.get_iter_value().value().first) != 2) { return 1; }
+	if(*(list.get_iter_value().value().second) != 4) { return 1; }
+
+	// Creating New Assigned List
+	hash_list list_copy = list;
+	list_copy.reset_iter();
+	if(list_copy.iter_at_end() == true) { return 1; }
+	if(list_copy.get_iter_value().has_value() == false) { return 1; }
+	if(*(list_copy.get_iter_value().value().first) != 2) { return 1; }
+	if(*(list_copy.get_iter_value().value().second) != 4) { return 1; }
+	list_copy.increment_iter();
+	if(list_copy.iter_at_end() == false) { return 1; }
 
     return EXIT_SUCCESS; 
 }    

@@ -113,7 +113,29 @@ hash_list::hash_list(const hash_list &other) {
 }
 
 // Assignment Operator -> LHS Points To RHS With A Shallow Copy
-hash_list &hash_list::operator=(const hash_list &other) { return *this; }
+hash_list &hash_list::operator=(const hash_list &other) { 
+	// Deleting Original List
+	node* curr = this -> head;
+	while(curr != NULL) {
+		node* next = curr -> next;
+		this -> remove(curr -> key);
+		curr = next;
+	}
+
+	// Resetting State
+	this -> head = NULL;	
+	this -> iter_ptr = other.iter_ptr;
+	this -> size = 0;
+
+	// Tranferring Other List -> This
+	curr = other.head;
+	while(curr != NULL) {
+		this -> insert(curr -> key, curr -> value);	
+		curr = curr -> next;
+	}
+
+	return *this; 
+}
 
 void hash_list::reset_iter() {
     if(this -> head == NULL) {
