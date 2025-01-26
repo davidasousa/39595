@@ -1,4 +1,5 @@
 #include <iostream>
+#include <cassert>
 
 #include "hash_list.h"
 
@@ -7,6 +8,8 @@ int trace_2();
 int trace_3();
 int trace_4();
 int trace_5();
+// Custom Traces
+int custom_trace_1();
 
 #ifdef PART2 // Only test iterators in part 2
 void iterator_example(hash_list &list)
@@ -73,7 +76,16 @@ int main(int argc, char *argv[])
         exit(1);
     }
 
+
 #endif
+
+    assert(trace_1() == EXIT_SUCCESS);
+    assert(trace_2() == EXIT_SUCCESS);
+    assert(trace_3() == EXIT_SUCCESS);
+    assert(trace_4() == EXIT_SUCCESS);
+    assert(trace_5() == EXIT_SUCCESS);
+
+    assert(custom_trace_1() == EXIT_SUCCESS);
 
 #ifdef PART2
     iterator_example(list);

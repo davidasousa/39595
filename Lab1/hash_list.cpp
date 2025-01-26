@@ -99,6 +99,11 @@ hash_list::~hash_list() {
 
 // Copy Constructor
 hash_list::hash_list(const hash_list &other) {	 
+    // Default Initializations
+	size = 0;
+	head = NULL;
+	iter_ptr = head;
+    // Copying The List
     node* curr = other.head;
     // Object Itself Is Stack Allocated But All Nodes Are Dynamic
     while(curr != NULL) { 
