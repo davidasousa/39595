@@ -11,6 +11,7 @@ int trace_5();
 // Custom Traces
 int custom_trace_1();
 int custom_trace_2();
+int custom_trace_3();
 
 #ifdef PART2 // Only test iterators in part 2
 void iterator_example(hash_list &list)
@@ -88,6 +89,7 @@ int main(int argc, char *argv[])
 
     assert(custom_trace_1() == EXIT_SUCCESS);
     assert(custom_trace_2() == EXIT_SUCCESS);
+    assert(custom_trace_3() == EXIT_SUCCESS);
 
 #ifdef PART2
     iterator_example(list);

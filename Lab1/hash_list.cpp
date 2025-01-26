@@ -15,6 +15,7 @@ hash_list::insert(int key, float value) {
 	// List Does Not Exist
 	if(head == NULL) { 
 		head = new node{key, value, NULL}; 
+		iter_ptr = head; // Ensure Iterator
 		size++;
 		return;
 	}
