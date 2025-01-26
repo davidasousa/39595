@@ -20,6 +20,9 @@ int custom_trace_3()
 
 	list1 = list2;
 	if(list1.get_size() != 2) { return 1; }
+	list1.remove(0);
+	list1.remove(2);
+	if(list1.iter_at_end() == false) { return 1; }
     
     return EXIT_SUCCESS; 
 }    

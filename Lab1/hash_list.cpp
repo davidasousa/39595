@@ -71,6 +71,7 @@ hash_list::remove(int key) {
 
 	if(prev == NULL) { // First Node In List
 		head = curr -> next;
+		iter_ptr = head; // Ensure Iterator Becomes Null
 	} else { // [1:n] Node
 		prev -> next = curr -> next;	
 	}
