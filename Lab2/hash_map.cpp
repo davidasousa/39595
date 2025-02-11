@@ -2,6 +2,8 @@
 
 int abs(int val) { return val < 0 ? -val : val; }
 
+int hash_func(int key, int modulus) { return abs(key) % modulus; }
+
 // Hashmap Constructor
 hash_map::hash_map(size_t capacity) {
 	_size = 0;
@@ -46,21 +48,21 @@ hash_map& hash_map::operator=(const hash_map& other) {
 // Key Modulo Capacity -> Hashing Function
 void hash_map::insert(int key, float value) {
 	// If The Hash List Does Not Yet Have This Key Increase Size
-	if(!(_head[(key % _capacity)].get_value(key).has_value())) {
+	if(!(_head[hash_func(key, _capacity)].get_value(key).has_value())) {
 		_size++;
 	}
-	_head[(key % _capacity)].insert(key, value);	
+	_head[hash_func(key, _capacity)].insert(key, value);	
 }
 
 // Get Value From Hashmap
 // Const Key Word Implies Original Function Cannot Be Changed
 std::optional<float> hash_map::get_value(int key) const {
-	return _head[(key % _capacity)].get_value(key);
+	return _head[hash_func(key, _capacity)].get_value(key);
 }
 
 bool hash_map::remove(int key) {
 	// Removing Key From Bucket
-	if(_head[(key % _capacity)].remove(key)) {
+	if(_head[hash_func(key, _capacity)].remove(key)) {
 		_size--;
 		return true;
 	} else {

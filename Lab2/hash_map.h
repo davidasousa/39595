@@ -99,7 +99,7 @@ public:
      *    etc
      * In order for this to work you MUST use the hash function that we specified in the
      * handout. To remind you again here, the hash function is simply the absolute value of the
-     * key
+     * key modulus _capacity
      *
      * @param buckets
      *  A pointer to an array that has at least _capacity elements
