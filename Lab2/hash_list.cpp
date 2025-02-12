@@ -41,18 +41,16 @@ hash_list::insert(int key, float value) {
 
 std::optional<float> 
 hash_list::get_value(int key) const {
-	std::optional<float> node_value;
 	node* curr = head;
-
 	// Iterate Through Nodes Till Either Reach End Or Find Value
 	while(curr != NULL && curr -> key != key) { 
 		curr = curr -> next; 
 	}
 	// If Node Was Found
 	if(curr != NULL) { 
-		node_value = curr -> value; 
+		return curr -> value; 
 	}
-	return node_value; 
+	return {};
 }
 
 bool 
@@ -115,7 +113,8 @@ hash_list::hash_list(const hash_list &other) {
 }
 
 // Assignment Operator -> LHS Points To RHS With A Shallow Copy
-hash_list &hash_list::operator=(const hash_list &other) { 
+hash_list 
+&hash_list::operator=(const hash_list &other) { 
 	// Deleting Original List
 	node* curr = head;
 	while(curr != NULL) {
@@ -144,27 +143,29 @@ hash_list &hash_list::operator=(const hash_list &other) {
 	return *this; 
 }
 
-void hash_list::reset_iter() { iter_ptr = head; }
+void 
+hash_list::reset_iter() { iter_ptr = head; }
 
-
-void hash_list::increment_iter() {
+void 
+hash_list::increment_iter() {
     if(this -> iter_ptr == NULL) { return; }
     iter_ptr = iter_ptr -> next;
 }
 
-
-std::optional<std::pair<const int *, float *>> hash_list::get_iter_value() { 
-	if(this -> iter_ptr == NULL) { return std::nullopt; }
+std::optional<std::pair<const int *, float *>> 
+hash_list::get_iter_value() { 
+	if(iter_ptr == NULL) { return std::nullopt; }
 
 	std::pair<const int*, float*> pair(
-		&(this -> iter_ptr -> key), // Key Address
-		&(this -> iter_ptr -> value) // Value Address
+		&(iter_ptr -> key), // Key Address
+		&(iter_ptr -> value) // Value Address
 	);
-    return pair; 
+  return pair; 
 }
 
 
-bool hash_list::iter_at_end() { 
+bool 
+hash_list::iter_at_end() { 
     if(this -> iter_ptr == NULL) { return true; }
     return false; 
 }

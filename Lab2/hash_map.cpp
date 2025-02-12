@@ -1,8 +1,10 @@
 #include "hash_map.h"
 
-int abs(int val) { return val < 0 ? -val : val; }
+int 
+abs(int val) { return val < 0 ? -val : val; }
 
-int hash_func(int key, int modulus) { return abs(key) % modulus; }
+int 
+hash_func(int key, int modulus) { return abs(key) % modulus; }
 
 // Hashmap Constructor
 hash_map::hash_map(size_t capacity) {
@@ -19,7 +21,6 @@ hash_map::~hash_map() {
 	delete[] _head;
 }
 
-// Hashmap Copy Constructor
 hash_map::hash_map(const hash_map& other) {
 	_size = other._size;
 	_capacity = other._capacity;
@@ -29,8 +30,11 @@ hash_map::hash_map(const hash_map& other) {
 	}
 }
 
-// Assignment Operator
-hash_map& hash_map::operator=(const hash_map& other) {
+hash_map& 
+hash_map::operator=(const hash_map& other) {
+	// Self Assignment Check
+	if(this == &other) { return *this; }
+
 	for(size_t idx = 0; idx < _capacity; idx++) {
 		_head[idx].~hash_list();
 	}
@@ -45,8 +49,8 @@ hash_map& hash_map::operator=(const hash_map& other) {
 	return *this;
 }
 
-// Key Modulo Capacity -> Hashing Function
-void hash_map::insert(int key, float value) {
+void 
+hash_map::insert(int key, float value) {
 	// If The Hash List Does Not Yet Have This Key Increase Size
 	if(!(_head[hash_func(key, _capacity)].get_value(key).has_value())) {
 		_size++;
@@ -54,14 +58,13 @@ void hash_map::insert(int key, float value) {
 	_head[hash_func(key, _capacity)].insert(key, value);	
 }
 
-// Get Value From Hashmap
-// Const Key Word Implies Original Function Cannot Be Changed
-std::optional<float> hash_map::get_value(int key) const {
+std::optional<float> 
+hash_map::get_value(int key) const {
 	return _head[hash_func(key, _capacity)].get_value(key);
 }
 
-bool hash_map::remove(int key) {
-	// Removing Key From Bucket
+bool 
+hash_map::remove(int key) {
 	if(_head[hash_func(key, _capacity)].remove(key)) {
 		_size--;
 		return true;
@@ -70,18 +73,14 @@ bool hash_map::remove(int key) {
 	}
 }
 
-// Get Size
-size_t hash_map::get_size() const {
-	return _size;
-}
+size_t 
+hash_map::get_size() const { return _size; }
 
-// Get Capacity
-size_t hash_map::get_capacity() const {
-	return _capacity;
-}
+size_t 
+hash_map::get_capacity() const { return _capacity; }
 
-// Get All Keys -> Place All Keys Into An Array
-void hash_map::get_all_keys(int* keys) {
+void 
+hash_map::get_all_keys(int* keys) {
 	int arrpos = 0;
 	for(size_t idx = 0; idx < _capacity; idx++) {
 		hash_list current_list = _head[idx];
@@ -94,8 +93,8 @@ void hash_map::get_all_keys(int* keys) {
 	}
 }
 
-// Get Bucket Sizes
-void hash_map::get_bucket_sizes(size_t* buckets) {
+void 
+hash_map::get_bucket_sizes(size_t* buckets) {
 	for(size_t idx = 0; idx < _capacity; idx++) {
 		buckets[idx] = _head[idx].get_size();
 	}
