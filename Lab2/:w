@@ -64,39 +64,12 @@ hash_map<K,V>::operator=(const hash_map& other) {
 
 // Resize The Capacity & Clean Up Old Memory
 template<typename K, typename V>
-void
+hash_map<K,V>& 
 hash_map<K,V>::resize_hash_map(size_t new_capacity) {
-	// Get All Old Keys & Values
-	K* keyArr = new K[_size];
-	V* valArr = new V[_size];	
-	get_all_keys(keyArr);
-	get_all_values(valArr);
+	hash_map new_map(new_capacity, other._lower_load_factor, other._upper_load_factor);
 
-	// Clean Up All Old Memory
-	for(size_t idx = 0; idx < _capacity; idx++) {
-		_head[idx].~hash_list();
-	}
-	delete[] _head;
-	
-	// Set New Capacity
-	_capacity = new_capacity;	
-
-	// Create New Hash Lists
-	_head = new hash_list<K,V>[_capacity];
-	for(size_t idx = 0; idx < _capacity; idx++) { 
-		_head[idx] = hash_list<K,V>(); 
-	}	
-
-	size_t fixed_size = _size; // Prevent Insert Changing
-	_size = 0;
-
-	// Add Keys & Values
-	for(size_t idx = 0; idx < fixed_size; idx++) {
-		insert(keyArr[idx], valArr[idx]);
-	}	
-	
-	delete[] keyArr;
-	delete[] valArr;
+	other.~hash_map();
+	return &new_map;
 }
 
 template<typename K, typename V>
@@ -110,9 +83,12 @@ hash_map<K,V>::insert(K key, V value) {
 
 	// Checking For Load Balance Rehashing
 	if(_size > _upper_load_factor * _capacity) {
-		if(_capacity == _capacities[1]) { resize_hash_map(_capacities[2]); }
-		if(_capacity == _capacities[0]) { resize_hash_map(_capacities[1]); }
+		if(_capacity == _capacities[2]) { return; }
+		if(_capacity == _capacities[1]) {
+			*this = 
+		}
 	}
+
 }
 
 template<typename K, typename V>
@@ -126,11 +102,6 @@ bool
 hash_map<K,V>::remove(K key) {
 	if(_head[_hash(key) % _capacity].remove(key)) {
 		_size--;
-		// Rehashing Check
-		if(_size < _lower_load_factor * _capacity) {
-			if(_capacity == _capacities[1]) { resize_hash_map(_capacities[0]); }
-			if(_capacity == _capacities[2]) { resize_hash_map(_capacities[1]); }
-		}
 		return true;
 	} else {
 		return false;
@@ -155,21 +126,6 @@ hash_map<K,V>::get_all_keys(K* keys) {
 
 		while(!(current_list.iter_at_end())) {
 			keys[arrpos++] = *(current_list.get_iter_value().value().first);
-			current_list.increment_iter();
-		}
-	}
-}
-
-template<typename K, typename V>
-void 
-hash_map<K,V>::get_all_values(V* values) {
-	int arrpos = 0;
-	for(size_t idx = 0; idx < _capacity; idx++) {
-		hash_list current_list = _head[idx];
-		current_list.reset_iter();
-
-		while(!(current_list.iter_at_end())) {
-			values[arrpos++] = *(current_list.get_iter_value().value().second);
 			current_list.increment_iter();
 		}
 	}

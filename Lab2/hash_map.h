@@ -126,6 +126,12 @@ public:
      */
     ~hash_map();
 
+		// Custom Resizing Function
+		void resize_hash_map(size_t new_capacity);
+		
+		// Used For The Resizing Function
+		void get_all_values(V* values);
+
 private:
     /** A pointer to an array of hash_lists */
     hash_list<K, V> *_head;
