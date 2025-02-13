@@ -4,20 +4,22 @@
 #include <optional>
 #include <stddef.h>
 #include <stdlib.h>
-#include <utility> // Added For Part2
+#include <utility>
 
 /** A single key/value pair in the linked list */
+template<typename K, typename V>
 struct 
 node {
     /** The key the node is storing */
-    int key;
+    K key;
     /** The value the node is storing */
-    float value;
+    V value;
     /** pointer to the next node */
     node *next;
 };
 
 /** A list that stores key/value pairs */
+template<typename K, typename V>
 class 
 hash_list {
 
@@ -41,7 +43,7 @@ public:
      * @param value
      *  The value to insert into the list
      */
-    void insert(int key, float value);
+    void insert(K key, V value);
 
     /**
      * @brief Return an optional containing the value associated with the specified key. If the key
@@ -53,7 +55,7 @@ public:
      *  If the key isn't in the list returns an empty optional
      *  If the key is in the list returns the corresponding value
      */
-    std::optional<float> get_value(int key) const;
+    std::optional<V> get_value(K key) const;
 
     /**
      * @brief Remove the node containing the specified key from the list and return true.
@@ -65,7 +67,7 @@ public:
      *  True if the key was removed from the list
      *  False if the key wasn't in the list
      */
-    bool remove(int key);
+    bool remove(K key);
 
     /**
      * @brief Return the number of nodes in the list. 
@@ -132,7 +134,7 @@ public:
      *  If the iterator is NULL returns an empty optional
      *  Otherwise returns a pointer to the key/value pointed to by the current iterator
      */
-    std::optional<std::pair<const int *, float *>> get_iter_value();
+    std::optional<std::pair<const K*, V*>> get_iter_value();
 
     /**
      * @brief Returns true if the iterator is NULL
@@ -150,8 +152,11 @@ private:
     /** The number of nodes in the list */
     size_t size;
     /** A pointer to the first node in the list */
-    node* head;
+    node<K,V>* head;
     /** The node that the iterator is currently pointing to */
-    node* iter_ptr;
+    node<K,V>* iter_ptr;
 };
+
+#include "hash_list.hpp"
+
 #endif
