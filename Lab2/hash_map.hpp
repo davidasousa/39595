@@ -42,8 +42,8 @@ hash_map<K,V>::hash_map(const hash_map& other) {
 template<typename K, typename V>
 hash_map<K,V>& 
 hash_map<K,V>::operator=(const hash_map& other) {
-	// Self Assignment
 	if(this == &other) { return *this; }
+
 	// Clean Up Old Memory
 	for(size_t idx = 0; idx < _capacity; idx++) {
 		_head[idx].~hash_list();
@@ -66,6 +66,9 @@ hash_map<K,V>::operator=(const hash_map& other) {
 template<typename K, typename V>
 void
 hash_map<K,V>::resize_hash_map(size_t new_capacity) {
+	// Prevent Insert Changing Size During Iteration
+	size_t fixed_size = _size; 
+
 	// Get All Old Keys & Values
 	K* keyArr = new K[_size];
 	V* valArr = new V[_size];	
@@ -87,7 +90,6 @@ hash_map<K,V>::resize_hash_map(size_t new_capacity) {
 		_head[idx] = hash_list<K,V>(); 
 	}	
 
-	size_t fixed_size = _size; // Prevent Insert Changing
 	_size = 0;
 
 	// Add Keys & Values
@@ -116,6 +118,9 @@ hash_map<K,V>::insert(K key, V value) {
 		if(_capacity < _capacities[1] && _capacity >= _capacities[0]) { 
 			resize_hash_map(_capacities[1]); 
 		}
+		if(_capacity < _capacities[0]) { 
+			resize_hash_map(_capacities[0]); 
+		}
 	}
 }
 
@@ -138,6 +143,9 @@ hash_map<K,V>::remove(K key) {
 			}
 			if(_capacity > _capacities[1] && _capacity <= _capacities[2]) { 
 				resize_hash_map(_capacities[1]); 
+			}
+			if(_capacity > _capacities[2]) { 
+				resize_hash_map(_capacities[2]); 
 			}
 		}
 		return true;
