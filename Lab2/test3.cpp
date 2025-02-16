@@ -40,6 +40,16 @@ int test3() {
 	
 	if(cmap.get_value('D').value() != 3) { return 1; }
 	if(cmap.get_capacity() != 209) { return 1;} 
+	if(cmap.get_size() != 20) { return 1;} 
+
+	char* charArr = new char[cmap.get_size()];
+	cmap.get_all_sorted_keys(charArr);
+	
+	if(charArr[0] != 'A') {
+		return 1;
+	}
+	
+	delete[] charArr;
 	
 	return 0;
 }

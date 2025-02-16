@@ -1,12 +1,5 @@
 #include "hash_map.h"
 
-template<typename K>
-size_t
-_hash(K key) { 
-	std::hash<K> _hash;
-	return _hash(key);
-}
-
 // Hashmap Constructor
 template<typename K, typename V>
 hash_map<K,V>::hash_map(size_t capacity, float upper_load_factor, float lower_load_factor) {
