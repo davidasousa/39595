@@ -59,9 +59,6 @@ hash_map<K,V>::operator=(const hash_map& other) {
 template<typename K, typename V>
 void
 hash_map<K,V>::resize_hash_map(size_t new_capacity) {
-	// Prevent Insert Changing Size During Iteration
-	size_t fixed_size = _size; 
-
 	// Get All Old Keys & Values
 	K* keyArr = new K[_size];
 	V* valArr = new V[_size];	
@@ -83,12 +80,10 @@ hash_map<K,V>::resize_hash_map(size_t new_capacity) {
 		_head[idx] = hash_list<K,V>(); 
 	}	
 
-	_size = 0;
-
 	// Add Keys & Values
-	for(size_t idx = 0; idx < fixed_size; idx++) {
-		insert(keyArr[idx], valArr[idx]);
-	}	
+	for(size_t idx = 0; idx < _size; idx++) {
+		_head[_hash(keyArr[idx]) % _capacity].insert(keyArr[idx], valArr[idx]);	
+	}
 	
 	delete[] keyArr;
 	delete[] valArr;
