@@ -103,17 +103,14 @@ hash_map<K,V>::insert(K key, V value) {
 	}
 	_head[_hash(key) % _capacity].insert(key, value);	
 
-	// Checking For Load Balance Increase Rehashing
 	if(_size > _upper_load_factor * _capacity) {
-		if(_capacity < _capacities[2] && _capacity >= _capacities[1]) { 
-			resize_hash_map(_capacities[2]); 
-		}
-		if(_capacity < _capacities[1] && _capacity >= _capacities[0]) { 
-			resize_hash_map(_capacities[1]); 
-		}
-		if(_capacity < _capacities[0]) { 
-			resize_hash_map(_capacities[0]); 
-		}
+		if(_capacity < _capacities[2] && _capacity >= _capacities[1]) { resize_hash_map(_capacities[2]); }
+		if(_capacity < _capacities[1] && _capacity >= _capacities[0]) { resize_hash_map(_capacities[1]); }
+		if(_capacity < _capacities[0]) { resize_hash_map(_capacities[0]); }
+	} else if(_size < _lower_load_factor * _capacity) {
+		if(_capacity > _capacities[0] && _capacity <= _capacities[1]) { resize_hash_map(_capacities[0]); }
+		if(_capacity > _capacities[1] && _capacity <= _capacities[2]) { resize_hash_map(_capacities[1]); }
+		if(_capacity > _capacities[2]) { resize_hash_map(_capacities[2]); }
 	}
 }
 
@@ -129,18 +126,15 @@ hash_map<K,V>::remove(K key) {
 	if(_head[_hash(key) % _capacity].remove(key)) {
 		_size--;
 
-		// Load Balance Decrease Rehashing 
-		if(_size < _lower_load_factor * _capacity) {
-			if(_capacity > _capacities[0] && _capacity <= _capacities[1]) { 
-				resize_hash_map(_capacities[0]); 
-			}
-			if(_capacity > _capacities[1] && _capacity <= _capacities[2]) { 
-				resize_hash_map(_capacities[1]); 
-			}
-			if(_capacity > _capacities[2]) { 
-				resize_hash_map(_capacities[2]); 
-			}
-		}
+	if(_size > _upper_load_factor * _capacity) {
+		if(_capacity < _capacities[2] && _capacity >= _capacities[1]) { resize_hash_map(_capacities[2]); }
+		if(_capacity < _capacities[1] && _capacity >= _capacities[0]) { resize_hash_map(_capacities[1]); }
+		if(_capacity < _capacities[0]) { resize_hash_map(_capacities[0]); }
+	} else if(_size < _lower_load_factor * _capacity) {
+		if(_capacity > _capacities[0] && _capacity <= _capacities[1]) { resize_hash_map(_capacities[0]); }
+		if(_capacity > _capacities[1] && _capacity <= _capacities[2]) { resize_hash_map(_capacities[1]); }
+		if(_capacity > _capacities[2]) { resize_hash_map(_capacities[2]); }
+	}
 		return true;
 	} else {
 		return false;
