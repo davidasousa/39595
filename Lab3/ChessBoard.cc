@@ -50,10 +50,23 @@ std::ostringstream ChessBoard::displayBoard()
 ChessBoard::ChessBoard(int numRow, int numCol) {
 	numRows = numRow;
 	numCols = numCol;
-	// Reserving Heap Memory
-	board.reserve(numRows);
+
+	// Initialize Board Vector
 	for(int idx = 0; idx < numRows; idx++) {
-		board[idx].reserve(numCols);
+		board.push_back(std::vector<ChessPiece *>{});
+		for(int jdx = 0; jdx < numCols; jdx++) {
+			board[idx].push_back(nullptr);
+		}
+	}
+}
+
+ChessBoard::~ChessBoard() {
+	for(int idx = 0; idx < numRows; idx++) {
+		for(int jdx = 0; jdx < numCols; jdx++) {
+			if(board[idx][jdx] != nullptr) { 
+				delete board[idx][jdx]; 
+			}
+		}
 	}
 }
 
