@@ -36,6 +36,7 @@ namespace Student
          */
         ChessBoard(int numRow, int numCol);
 
+				// Destructor 
         ~ChessBoard();
 
         /**
