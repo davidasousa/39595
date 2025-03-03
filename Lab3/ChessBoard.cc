@@ -58,6 +58,7 @@ bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn)
 }
 
 bool ChessBoard::isValidMove(int fromRow, int fromColumn, int toRow, int toColumn) {
+	if(board[fromRow][fromColumn] == nullptr) { return false; } // No Piece At Index
 	return board[fromRow][fromColumn] -> canMoveToLocation(toRow, toColumn);
 }
 

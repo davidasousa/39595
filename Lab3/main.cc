@@ -3,7 +3,7 @@
 #include "ChessBoard.hh"
 #include "ChessPiece.hh"
 
-void test_part1_4x4_1()
+int test_part1_4x4_1()
 {
     // Config file content:
     // 0
@@ -25,11 +25,21 @@ void test_part1_4x4_1()
     // Calls isValidMove() from every position to every
     // other position on the chess board for all pieces.
 
-    return;
+		// Testing The White Rook On 3,2
+		if(sBoard.isValidMove(3, 2, -1, 2)) { return 1; }
+		if(sBoard.isValidMove(3, 2, 4, 2)) { return 1; }
+		if(!sBoard.isValidMove(3, 2, 2, 2)) { return 1; }
+		if(!sBoard.isValidMove(3, 2, 3, 0)) { return 1; }
+
+		// Testing The White Rook On 2,3
+		if(!sBoard.isValidMove(2, 3, 1, 3)) { return 1; }
+		if(sBoard.isValidMove(2, 3, 0, 3)) { return 1; }
+
+    return 0;
 }
 
 int main()
 {
-    test_part1_4x4_1();
+    assert(test_part1_4x4_1() == 0);
     return EXIT_SUCCESS;
 }

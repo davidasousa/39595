@@ -24,11 +24,31 @@ namespace Student
 			virtual bool canMoveToLocation(int toRow, int toColumn) {
 				// Redundant Move
 				if(toRow == _row && toColumn == _column) { return false; }
+
 				// Check Movement Within Bounds
-				if(toRow <= -1 || toRow >= 8) { return false; }
-				if(toColumn <= -1 || toColumn >= 8) { return false; }	
-				// Both Row & Column Changes
+				if(toRow <= -1 || toRow >= _board.getNumRows()) { return false; }
+				if(toColumn <= -1 || toColumn >= _board.getNumCols()) { return false; }	
+
+				// Check If To Square Has Same Color Piece
+				ChessPiece* destPiece = _board.getPiece(toRow, toColumn);
+				if(destPiece != nullptr && destPiece -> getColor() == _color) { return false; }
+
+				// Both Row & Column Changes -> Invalid
 				if(toRow != _row && toColumn != _column) { return false; }
+				else if(toRow != _row && toColumn == _column) { // Rows Dont Align
+					int upperRow = (toRow > _row) ? toRow : _row;
+					int lowerRow = (toRow < _row) ? toRow : _row;
+					for(int rowIdx = lowerRow + 1; rowIdx != upperRow; rowIdx++) {
+						if(_board.getPiece(rowIdx, _column) != nullptr) { return false; }
+					}
+				} else if(toRow == _row && toColumn != _column) { // Cols Dont Align
+					int upperCol = (toColumn > _column) ? toColumn : _column;
+					int lowerCol = (toColumn < _column) ? toColumn : _column;
+					for(int colIdx = lowerCol + 1; colIdx != upperCol; colIdx++) {
+						if(_board.getPiece(_row, colIdx) != nullptr) { return false; }
+					}
+				}
+
 				return true;
 			}
 

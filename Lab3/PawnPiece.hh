@@ -24,9 +24,15 @@ namespace Student
 			virtual bool canMoveToLocation(int toRow, int toColumn) {
 				// Redundant Move
 				if(toRow == _row && toColumn == _column) { return false; }
+
 				// Check Movement Within Bounds
-				if(toRow <= -1 || toRow >= 8) { return false; }
-				if(toColumn <= -1 || toColumn >= 8) { return false; }
+				if(toRow <= -1 || toRow >= _board.getNumRows()) { return false; }
+				if(toColumn <= -1 || toColumn >= _board.getNumCols()) { return false; }
+
+				// Check If To Square Has Same Color Piece
+				ChessPiece* destPiece = _board.getPiece(toRow, toColumn);
+				if(destPiece != nullptr && destPiece -> getColor() == _color) { return false; }
+
 				// Should Not Change Columns
 				if(toColumn != _column) { return false; }
 				if(_color == White && toRow - _row != 1) { return false; }
