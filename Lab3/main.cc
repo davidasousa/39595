@@ -187,6 +187,7 @@ int test_part1_4x4_5() {
 	if(sBoard.isValidMove(0, 1, 2, 2)) { return 1; }
 	if(sBoard.isValidMove(0, 1, 2, 3)) { return 1; }
 
+
 	// Testing The White Pawn
 	if(sBoard.isValidMove(1, 1, 0, 0)) { return 1; }
 	if(sBoard.isValidMove(1, 1, 0, 1)) { return 1; }
@@ -245,6 +246,35 @@ int test_part1_4x4_5() {
 	return 0;
 }
 
+int test_part1_4x4_6() {
+	Student::ChessBoard sBoard(4, 4);
+	sBoard.createChessPiece(White, Bishop, 3, 0);
+	sBoard.createChessPiece(White, Bishop, 3, 3);
+	sBoard.createChessPiece(Black, Rook, 2, 2);
+	sBoard.createChessPiece(Black, Rook, 0, 2);
+
+	// Testing The First White Bishop
+	if(sBoard.isValidMove(3, 0, 0, 0)) { return 1; }
+	if(sBoard.isValidMove(3, 0, 0, 1)) { return 1; }
+	if(sBoard.isValidMove(3, 0, 0, 2)) { return 1; }
+	if(sBoard.isValidMove(3, 0, 0, 3) == false) { return 1; }
+	if(sBoard.isValidMove(3, 0, 1, 0)) { return 1; }
+	if(sBoard.isValidMove(3, 0, 1, 1)) { return 1; }
+	if(sBoard.isValidMove(3, 0, 1, 2) == false) { return 1; }
+	if(sBoard.isValidMove(3, 0, 1, 3)) { return 1; }
+	if(sBoard.isValidMove(3, 0, 2, 0)) { return 1; }
+	if(sBoard.isValidMove(3, 0, 2, 1) == false) { return 1; }
+	if(sBoard.isValidMove(3, 0, 2, 2)) { return 1; }
+	if(sBoard.isValidMove(3, 0, 2, 3)) { return 1; }
+	if(sBoard.isValidMove(3, 0, 3, 0)) { return 1; }
+	if(sBoard.isValidMove(3, 0, 3, 1)) { return 1; }
+	if(sBoard.isValidMove(3, 0, 3, 2)) { return 1; }
+	if(sBoard.isValidMove(3, 0, 3, 3)) { return 1; }
+
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	return 0;
+}
+
 int main()
 {
 	assert(test_part1_4x4_1() == 0);
@@ -252,5 +282,6 @@ int main()
 	assert(test_part1_4x4_3() == 0);
 	assert(test_part1_4x4_4() == 0);
 	assert(test_part1_4x4_5() == 0);
+	assert(test_part1_4x4_6() == 0);
 	return EXIT_SUCCESS;
 }

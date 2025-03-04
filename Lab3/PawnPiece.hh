@@ -32,6 +32,9 @@ namespace Student
 				// Check If To Square Has Same Color Piece
 				ChessPiece* destPiece = _board.getPiece(toRow, toColumn);
 				if(destPiece != nullptr && destPiece -> getColor() == _color) { return false; }
+				// Columns Dont Change But Capture Happens
+				if(toColumn == _column && _board.getPiece(toRow, toColumn) != nullptr) { return false; }
+
 
 				// Changing Columns
 				if(toColumn != _column) { 
@@ -42,9 +45,6 @@ namespace Student
 					// Same Color Piece
 					if(_board.getPiece(toRow, toColumn) -> getColor() == _color) { return false; } 
 				} 
-
-				// Columns Dont Change But Capture Happens
-				if(toColumn == _column && _board.getPiece(toRow, toColumn) != nullptr) { return false; }
 
 				// Row Movement
 				int delta = toRow - _row;

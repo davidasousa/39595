@@ -51,7 +51,7 @@ namespace Student {
 					}
 				} else if(toRow < _row && toColumn > _column) { // Up Right
 					while(_row - itr != toRow && _column + itr != toColumn) {
-						if(_board.getPiece(_row + itr, _column + itr) != nullptr) { return false; }
+						if(_board.getPiece(_row - itr, _column + itr) != nullptr) { return false; }
 						itr += 1;
 					}
 				}
