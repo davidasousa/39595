@@ -3,6 +3,8 @@
 #include "ChessBoard.hh"
 #include "ChessPiece.hh"
 
+#include <iostream>
+
 int test_part1_4x4_1()
 {
 	// Config file content:
@@ -156,6 +158,8 @@ int test_part1_4x4_4() {
 	if(sBoard.isValidMove(2, 3, 3, 1)) { return 1; }
 	if(sBoard.isValidMove(2, 3, 3, 2)) { return 1; }
 	if(sBoard.isValidMove(2, 3, 3, 3) == false) { return 1; }
+
+	std::cout << sBoard.displayBoard().str() << std::endl;
 
 	return 0;
 }

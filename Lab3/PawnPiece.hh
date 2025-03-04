@@ -3,6 +3,9 @@
 
 #include "ChessPiece.hh"
 
+// Helper Function
+int abs(int input) { return (input < 0) ? -input : input; }
+
 /**
  * Student implementation of a Pawn chess piece.
  * The class is defined within the Student namespace.
@@ -15,7 +18,7 @@ namespace Student
 			PawnPiece(ChessBoard& board, Color color, int row, int column) 
 				: ChessPiece(board, color, row, column) {
 				_type = Pawn;
-				_string = (color == White) ? (char*) U'\u2659' : (char*) U'\u265F';
+				_string = (color == White) ? (char*) u8"\u2659" : (char*) u8"\u265F";
 			}
 			
 			virtual bool canMoveToLocation(int toRow, int toColumn) {

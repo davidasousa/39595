@@ -3,9 +3,6 @@
 
 #include "ChessPiece.hh"
 
-// Helper Function
-int abs(int input) { return (input < 0) ? -input : input; }
-
 /**
  * Student implementation of a Bishop chess piece.
  * The class is defined within the Student namespace.
@@ -17,7 +14,7 @@ namespace Student {
 			BishopPiece(ChessBoard& board, Color color, int row, int column) 
 				: ChessPiece(board, color, row, column) {
 				_type = Bishop;
-				_string = (color == White) ? (char*) U'\u2657' : (char*) U'\u265D';
+				_string = (color == White) ? (char*) u8"\u2657" : (char*) u8"\u265D" ;
 			}
 			
 			virtual bool canMoveToLocation(int toRow, int toColumn) {

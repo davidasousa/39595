@@ -15,7 +15,7 @@ namespace Student
 			RookPiece(ChessBoard& board, Color color, int row, int column) 
 				: ChessPiece(board, color, row, column) {
 				_type = Rook;
-				_string = (color == White) ? (char*) U'\u2656' : (char*) U'\u265C';
+				_string = (color == White) ? (char*) u8"\u2656" : (char*) u8"\u265C";
 			}
 			
 			virtual bool canMoveToLocation(int toRow, int toColumn) {
