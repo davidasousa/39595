@@ -292,14 +292,25 @@ int test_part1_4x4_7() {
 
 int test_part2_4x4_1() {
 	Student::ChessBoard sBoard(4, 4);
-	sBoard.createChessPiece(Black, Pawn, 0, 0);
-	sBoard.createChessPiece(White, Pawn, 2, 1);
+	sBoard.createChessPiece(White, Rook, 3, 2);
+	sBoard.createChessPiece(Black, Bishop, 1, 3);
+	sBoard.createChessPiece(Black, Rook, 1, 1);
+	sBoard.createChessPiece(White, Rook, 2, 3);
 
-	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(sBoard.isPieceUnderThreat(1, 1)) { return 1; }
+	if(!sBoard.isPieceUnderThreat(1, 3)) { return 1; }
+	if(sBoard.isPieceUnderThreat(2, 3)) { return 1; }
+	if(sBoard.isPieceUnderThreat(3, 2)) { return 1; }
 	
-	if(!sBoard.movePiece(2, 1, 1, 1)) { return 1; }
-
 	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(!sBoard.movePiece(3, 2, 3, 1)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(!sBoard.movePiece(1, 1, 1, 2)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(!sBoard.movePiece(2, 3, 2, 1)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(!sBoard.movePiece(1, 2, 0, 2)) { return 1; }
+	//if(sBoard.movePiece(0, 0, 2, 3)) { return 1; }
 
 	return 0;
 }

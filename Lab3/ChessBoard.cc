@@ -55,11 +55,14 @@ void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startCol
 }
 
 bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn) {
+	if(board[fromRow][fromColumn] == nullptr) { return false; }
 	if(board[fromRow][fromColumn] -> getColor() != turn) { return false; }
 	if(!isValidMove(fromRow, fromColumn, toRow, toColumn)) { return false; }
 	// If Capture -> Delete & Remove Piece
 	if(board[toRow][toColumn] != nullptr) { delete board[toRow][toColumn]; }
 	board[toRow][toColumn] = board[fromRow][fromColumn];
+
+	board[fromRow][fromColumn] -> setPosition(toRow, toColumn);
 	board[fromRow][fromColumn] = nullptr;
 	// Changing Turn
 	turn = (turn == White) ? Black : White;
