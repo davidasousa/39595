@@ -88,37 +88,76 @@ int test_part1_4x4_4() {
 	sBoard.createChessPiece(White, Rook, 2, 3);
 
 	// Testing The Black Rook
-	if(sBoard.isValidMove(1, 1, 1, 3)) { return 1; }
-	if(!sBoard.isValidMove(1, 1, 1, 2)) { return 1; }
-	if(!sBoard.isValidMove(1, 1, 1, 0)) { return 1; }
-	if(!sBoard.isValidMove(1, 1, 2, 1)) { return 1; }
-	if(!sBoard.isValidMove(1, 1, 0, 1)) { return 1; }
-	if(sBoard.isValidMove(1, 1, 2, 0)) { return 1; }
 	if(sBoard.isValidMove(1, 1, 0, 0)) { return 1; }
+	if(sBoard.isValidMove(1, 1, 0, 1) == false) { return 1; }
 	if(sBoard.isValidMove(1, 1, 0, 2)) { return 1; }
+	if(sBoard.isValidMove(1, 1, 0, 3)) { return 1; }
+	if(sBoard.isValidMove(1, 1, 1, 0) == false) { return 1; }
+	if(sBoard.isValidMove(1, 1, 1, 1)) { return 1; }
+	if(sBoard.isValidMove(1, 1, 1, 2) == false) { return 1; }
+	if(sBoard.isValidMove(1, 1, 1, 3)) { return 1; }
+	if(sBoard.isValidMove(1, 1, 2, 0)) { return 1; }
+	if(sBoard.isValidMove(1, 1, 2, 1) == false) { return 1; }
 	if(sBoard.isValidMove(1, 1, 2, 2)) { return 1; }
+	if(sBoard.isValidMove(1, 1, 2, 3)) { return 1; }
+	if(sBoard.isValidMove(1, 1, 3, 0)) { return 1; }
+	if(sBoard.isValidMove(1, 1, 3, 1) == false) { return 1; }
+	if(sBoard.isValidMove(1, 1, 3, 2)) { return 1; }
+	if(sBoard.isValidMove(1, 1, 3, 3)) { return 1; }
 
 	// Testing The Black Bishop
-	if(sBoard.isValidMove(1, 3, 1, 1)) { return 1; }
-	if(sBoard.isValidMove(1, 3, 2, 3)) { return 1; }
-	if(sBoard.isValidMove(1, 3, 1, 4)) { return 1; }
-	if(sBoard.isValidMove(1, 3, 1, -1)) { return 1; }
-	if(!sBoard.isValidMove(1, 3, 2, 2)) { return 1; }
-	if(!sBoard.isValidMove(1, 3, 3, 1)) { return 1; }
-	if(!sBoard.isValidMove(1, 3, 0, 2)) { return 1; }
-	if(sBoard.isValidMove(1, 3, 1, 3)) { return 1; }
 	if(sBoard.isValidMove(1, 3, 0, 0)) { return 1; }
-	if(sBoard.isValidMove(1, 3, 3, 0)) { return 1; }
+	if(sBoard.isValidMove(1, 3, 0, 1)) { return 1; }
+	if(sBoard.isValidMove(1, 3, 0, 2) == false) { return 1; }
 	if(sBoard.isValidMove(1, 3, 0, 3)) { return 1; }
+	if(sBoard.isValidMove(1, 3, 1, 0)) { return 1; }
+	if(sBoard.isValidMove(1, 3, 1, 1)) { return 1; }
+	if(sBoard.isValidMove(1, 3, 1, 2)) { return 1; }
+	if(sBoard.isValidMove(1, 3, 1, 3)) { return 1; }
+	if(sBoard.isValidMove(1, 3, 2, 0)) { return 1; }
+	if(sBoard.isValidMove(1, 3, 2, 1)) { return 1; }
+	if(sBoard.isValidMove(1, 3, 2, 2) == false) { return 1; }
+	if(sBoard.isValidMove(1, 3, 2, 3)) { return 1; }
+	if(sBoard.isValidMove(1, 3, 3, 0)) { return 1; }
+	if(sBoard.isValidMove(1, 3, 3, 1 == false)) { return 1; }
+	if(sBoard.isValidMove(1, 3, 3, 2)) { return 1; }
 	if(sBoard.isValidMove(1, 3, 3, 3)) { return 1; }
 
-	// Testing The White Rook
-	if(!sBoard.isValidMove(2, 3, 2, 2)) { return 1; }
-	if(!sBoard.isValidMove(2, 3, 1, 3)) { return 1; }
+	// Testing The First White Rook
+	if(sBoard.isValidMove(3, 2, 0, 0)) { return 1; }
+	if(sBoard.isValidMove(3, 2, 0, 1)) { return 1; }
+	if(sBoard.isValidMove(3, 2, 0, 2) == false) { return 1; }
+	if(sBoard.isValidMove(3, 2, 0, 3)) { return 1; }
+	if(sBoard.isValidMove(3, 2, 1, 0)) { return 1; }
+	if(sBoard.isValidMove(3, 2, 1, 1)) { return 1; }
+	if(sBoard.isValidMove(3, 2, 1, 2) == false) { return 1; }
+	if(sBoard.isValidMove(3, 2, 1, 3)) { return 1; }
+	if(sBoard.isValidMove(3, 2, 2, 0)) { return 1; }
+	if(sBoard.isValidMove(3, 2, 2, 1)) { return 1; }
+	if(sBoard.isValidMove(3, 2, 2, 2) == false) { return 1; }
+	if(sBoard.isValidMove(3, 2, 2, 3)) { return 1; }
+	if(sBoard.isValidMove(3, 2, 3, 0) == false) { return 1; }
+	if(sBoard.isValidMove(3, 2, 3, 1) == false) { return 1; }
+	if(sBoard.isValidMove(3, 2, 3, 2)) { return 1; }
+	if(sBoard.isValidMove(3, 2, 3, 3) == false) { return 1; }
+
+	// Testing The Second White Rook
+	if(sBoard.isValidMove(2, 3, 0, 0)) { return 1; }
+	if(sBoard.isValidMove(2, 3, 0, 1)) { return 1; }
+	if(sBoard.isValidMove(2, 3, 0, 2)) { return 1; }
 	if(sBoard.isValidMove(2, 3, 0, 3)) { return 1; }
-	if(sBoard.isValidMove(2, 3, -1, 3)) { return 1; }
+	if(sBoard.isValidMove(2, 3, 1, 0)) { return 1; }
+	if(sBoard.isValidMove(2, 3, 1, 1)) { return 1; }
+	if(sBoard.isValidMove(2, 3, 1, 2)) { return 1; }
+	if(sBoard.isValidMove(2, 3, 1, 3) == false) { return 1; }
+	if(sBoard.isValidMove(2, 3, 2, 0) == false) { return 1; }
+	if(sBoard.isValidMove(2, 3, 2, 1) == false) { return 1; }
+	if(sBoard.isValidMove(2, 3, 2, 2) == false) { return 1; }
+	if(sBoard.isValidMove(2, 3, 2, 3)) { return 1; }
+	if(sBoard.isValidMove(2, 3, 3, 0)) { return 1; }
+	if(sBoard.isValidMove(2, 3, 3, 1)) { return 1; }
 	if(sBoard.isValidMove(2, 3, 3, 2)) { return 1; }
-	if(!sBoard.isValidMove(2, 3, 3, 3)) { return 1; }
+	if(sBoard.isValidMove(2, 3, 3, 3) == false) { return 1; }
 
 	return 0;
 }
