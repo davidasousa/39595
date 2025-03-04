@@ -41,10 +41,14 @@ namespace Student
 					if(_board.getPiece(toRow, toColumn) == nullptr) { return false; }
 					// Same Color Piece
 					if(_board.getPiece(toRow, toColumn) -> getColor() == _color) { return false; } 
-				} else if(destPiece != nullptr) { return false; } // Capture Without Changing Columns
+				} 
+
+				// Columns Dont Change But Capture Happens
+				if(toColumn == _column && _board.getPiece(toRow, toColumn) != nullptr) { return false; }
 
 				// Row Movement
 				int delta = toRow - _row;
+
 				if(_color == White) {
 					if(_row == _board.getNumRows() - 2) {
 						if(delta < -2 || delta > -1) { return false; }
@@ -58,6 +62,10 @@ namespace Student
 						if(delta != 1) { return false; }
 					}
 				}
+
+				// Check Piece In Long Jump
+				if(delta == -2 && _board.getPiece(_row - 1, toColumn) != nullptr) { return false; }
+				if(delta == 2 && _board.getPiece(_row + 1, toColumn) != nullptr) { return false; }
 
 				return true;
 			}
