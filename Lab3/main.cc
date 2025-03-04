@@ -302,16 +302,11 @@ int test_part2_4x4_1() {
 	if(sBoard.isPieceUnderThreat(2, 3)) { return 1; }
 	if(sBoard.isPieceUnderThreat(3, 2)) { return 1; }
 	
-	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(!sBoard.movePiece(3, 2, 3, 1)) { return 1; }
-	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(!sBoard.movePiece(1, 1, 1, 2)) { return 1; }
-	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(!sBoard.movePiece(2, 3, 2, 1)) { return 1; }
-	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(!sBoard.movePiece(1, 2, 0, 2)) { return 1; }
 	if(sBoard.movePiece(0, 0, 2, 3)) { return 1; } // No Piece At Position
-	std::cout << sBoard.displayBoard().str() << std::endl;
 
 	if(sBoard.isPieceUnderThreat(0, 2)) { return 1; }
 	if(sBoard.isPieceUnderThreat(1, 3)) { return 1; }
@@ -319,15 +314,10 @@ int test_part2_4x4_1() {
 	if(!sBoard.isPieceUnderThreat(3, 1)) { return 1; }
 
 	if(!sBoard.movePiece(2, 1, 0, 1)) { return 1; }
-	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(!sBoard.movePiece(1, 3, 2, 2)) { return 1; }
-	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(!sBoard.movePiece(3, 1, 3, 0)) { return 1; }
-	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(!sBoard.movePiece(2, 2, 3, 1)) { return 1; }
-	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(sBoard.movePiece(0, 2, 1, 0)) { return 1; } // Bad Move
-	std::cout << sBoard.displayBoard().str() << std::endl;
 
 	if(!sBoard.isPieceUnderThreat(0, 2)) { return 1; }
 	if(!sBoard.isPieceUnderThreat(0, 1)) { return 1; }
@@ -335,21 +325,32 @@ int test_part2_4x4_1() {
 	if(!sBoard.isPieceUnderThreat(3, 1)) { return 1; }
 
 	if(!sBoard.movePiece(3, 0, 3, 1)) { return 1; }
-	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(!sBoard.movePiece(0, 2, 2, 2)) { return 1; }
-	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(!sBoard.movePiece(3, 1, 3, 0)) { return 1; }
-	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(!sBoard.movePiece(2, 2, 1, 2)) { return 1; } 
-	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(sBoard.movePiece(1, 1, 2, 3)) { return 1; }
-	std::cout << sBoard.displayBoard().str() << std::endl;
 
 	if(sBoard.isPieceUnderThreat(0, 1)) { return 1; }
 	if(sBoard.isPieceUnderThreat(1, 2)) { return 1; }
 	if(sBoard.isPieceUnderThreat(3, 0)) { return 1; }
 
 	if(!sBoard.movePiece(3, 0, 0, 0)) { return 1; }
+
+	return 0;
+}
+
+int test_part2_4x4_2() {
+	Student::ChessBoard sBoard(4, 4);
+	sBoard.createChessPiece(White, Rook, 2, 1);
+	sBoard.createChessPiece(Black, Rook, 1, 0);
+	sBoard.createChessPiece(Black, Bishop, 0, 3);
+
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	
+	if(sBoard.isPieceUnderThreat(0, 0)) { return 1; } // Fake Piece
+	if(sBoard.isPieceUnderThreat(0, 3)) { return 1; }
+	if(sBoard.isPieceUnderThreat(1, 0)) { return 1; }
+	if(sBoard.isPieceUnderThreat(2, 1) == false) { return 1; }
 
 	return 0;
 }
@@ -363,5 +364,6 @@ int main() {
 	assert(test_part1_4x4_6() == 0);
 	assert(test_part1_4x4_7() == 0);
 	assert(test_part2_4x4_1() == 0);
+	assert(test_part2_4x4_2() == 0);
 	return EXIT_SUCCESS;
 }
