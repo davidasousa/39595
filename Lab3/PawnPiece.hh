@@ -41,7 +41,7 @@ namespace Student
 					if(_board.getPiece(toRow, toColumn) == nullptr) { return false; }
 					// Same Color Piece
 					if(_board.getPiece(toRow, toColumn) -> getColor() == _color) { return false; } 
-				}
+				} else if(destPiece != nullptr) { return false; } // Capture Without Changing Columns
 
 				// Row Movement
 				int delta = toRow - _row;

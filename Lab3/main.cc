@@ -159,8 +159,29 @@ int test_part1_4x4_4() {
 	if(sBoard.isValidMove(2, 3, 3, 2)) { return 1; }
 	if(sBoard.isValidMove(2, 3, 3, 3) == false) { return 1; }
 
-	std::cout << sBoard.displayBoard().str() << std::endl;
+	return 0;
+}
 
+int test_part1_4x4_5() {
+	Student::ChessBoard sBoard(4, 4);
+	sBoard.createChessPiece(White, Rook, 1, 0);
+	sBoard.createChessPiece(White, Pawn, 1, 1);
+	sBoard.createChessPiece(White, Bishop, 2, 2);
+	sBoard.createChessPiece(Black, Pawn, 0, 1);
+
+	// Testing The Black Pawn
+	if(sBoard.isValidMove(0, 1, 0, 0)) { return 1; }
+	if(sBoard.isValidMove(0, 1, 0, 1)) { return 1; }
+	if(sBoard.isValidMove(0, 1, 0, 2)) { return 1; }
+	if(sBoard.isValidMove(0, 1, 0, 3)) { return 1; }
+	if(sBoard.isValidMove(0, 1, 1, 0) == false) { return 1; }
+	if(sBoard.isValidMove(0, 1, 1, 1)) { return 1; }
+	if(sBoard.isValidMove(0, 1, 1, 2)) { return 1; }
+	if(sBoard.isValidMove(0, 1, 1, 3)) { return 1; }
+	if(sBoard.isValidMove(0, 1, 2, 0)) { return 1; }
+	if(sBoard.isValidMove(0, 1, 2, 1)) { return 1; }
+
+	std::cout << sBoard.displayBoard().str() << std::endl;
 	return 0;
 }
 
@@ -170,5 +191,6 @@ int main()
 	assert(test_part1_4x4_2() == 0);
 	assert(test_part1_4x4_3() == 0);
 	assert(test_part1_4x4_4() == 0);
+	assert(test_part1_4x4_5() == 0);
 	return EXIT_SUCCESS;
 }
