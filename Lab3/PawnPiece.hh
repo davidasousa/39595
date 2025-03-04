@@ -35,6 +35,8 @@ namespace Student
 				// Columns Dont Change But Capture Happens
 				if(toColumn == _column && _board.getPiece(toRow, toColumn) != nullptr) { return false; }
 
+				// Row Movement
+				int delta = toRow - _row;
 
 				// Changing Columns
 				if(toColumn != _column) { 
@@ -44,10 +46,9 @@ namespace Student
 					if(_board.getPiece(toRow, toColumn) == nullptr) { return false; }
 					// Same Color Piece
 					if(_board.getPiece(toRow, toColumn) -> getColor() == _color) { return false; } 
+					// | Delta | != 1
+					if(abs(delta) != 1) { return false; }
 				} 
-
-				// Row Movement
-				int delta = toRow - _row;
 
 				if(_color == White) {
 					if(_row == _board.getNumRows() - 2) {
