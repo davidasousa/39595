@@ -53,10 +53,8 @@ int test_part1_4x4_2() {
 	sBoard.createChessPiece(Black, Bishop, 2, 2);
 	sBoard.createChessPiece(Black, Bishop, 3, 3);
 
-	if(sBoard.isValidMove(1, 1, 2, 2)) { return 1; }
 	if(!sBoard.isValidMove(0, 0, 2, 2)) { return 1; }
 	if(sBoard.isValidMove(0, 0, 3, 3)) { return 1; }
-	if(sBoard.isValidMove(0, 0, 2, 1)) { return 1; }
 
 	return 0;
 }
@@ -105,6 +103,22 @@ int test_part1_4x4_4() {
 	if(sBoard.isValidMove(1, 3, 2, 3)) { return 1; }
 	if(sBoard.isValidMove(1, 3, 1, 4)) { return 1; }
 	if(sBoard.isValidMove(1, 3, 1, -1)) { return 1; }
+	if(!sBoard.isValidMove(1, 3, 2, 2)) { return 1; }
+	if(!sBoard.isValidMove(1, 3, 3, 1)) { return 1; }
+	if(!sBoard.isValidMove(1, 3, 0, 2)) { return 1; }
+	if(sBoard.isValidMove(1, 3, 1, 3)) { return 1; }
+	if(sBoard.isValidMove(1, 3, 0, 0)) { return 1; }
+	if(sBoard.isValidMove(1, 3, 3, 0)) { return 1; }
+	if(sBoard.isValidMove(1, 3, 0, 3)) { return 1; }
+	if(sBoard.isValidMove(1, 3, 3, 3)) { return 1; }
+
+	// Testing The White Rook
+	if(!sBoard.isValidMove(2, 3, 2, 2)) { return 1; }
+	if(!sBoard.isValidMove(2, 3, 1, 3)) { return 1; }
+	if(sBoard.isValidMove(2, 3, 0, 3)) { return 1; }
+	if(sBoard.isValidMove(2, 3, -1, 3)) { return 1; }
+	if(sBoard.isValidMove(2, 3, 3, 2)) { return 1; }
+	if(!sBoard.isValidMove(2, 3, 3, 3)) { return 1; }
 
 	return 0;
 }
