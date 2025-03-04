@@ -41,16 +41,16 @@ namespace Student
 				}
 
 				// Row Movement
-				int delta = _row - toRow;
+				int delta = toRow - _row;
 				if(_color == White) {
 					if(_row == _board.getNumRows() - 2) {
-						if(delta != -2 || delta != -1) { return false; }
+						if(delta < -2 || delta > -1) { return false; }
 					} else {
 						if(delta != -1) { return false; }
 					}
 				} else if(_color == Black) {
 					if(_row == 1) {
-						if(delta != 2 || delta != 1) { return false; }
+						if(delta < 1 || delta > 2) { return false; }
 					} else {
 						if(delta != 1) { return false; }
 					}
