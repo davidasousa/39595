@@ -18,9 +18,6 @@ namespace Student
 				_string = (color == White) ? (char*) U'\u2659' : (char*) U'\u265F';
 			}
 			
-			// Destructor
-			virtual ~PawnPiece() {};
-
 			virtual bool canMoveToLocation(int toRow, int toColumn) {
 				// Redundant Move
 				if(toRow == _row && toColumn == _column) { return false; }
@@ -33,10 +30,32 @@ namespace Student
 				ChessPiece* destPiece = _board.getPiece(toRow, toColumn);
 				if(destPiece != nullptr && destPiece -> getColor() == _color) { return false; }
 
-				// Should Not Change Columns
-				if(toColumn != _column) { return false; }
-				if(_color == White && toRow - _row != 1) { return false; }
-				if(_color == Black && toRow - _row != -1) { return false; }
+				// Changing Columns
+				if(toColumn != _column) { 
+					// Column Not 1 Column Away
+					if(abs(toColumn - _column) != 1) { return false; }
+					// No Piece
+					if(_board.getPiece(toRow, toColumn) == nullptr) { return false; }
+					// Same Color Piece
+					if(_board.getPiece(toRow, toColumn) -> getColor() == _color) { return false; } 
+				}
+
+				// Row Movement
+				int delta = _row - toRow;
+				if(_color == White) {
+					if(_row == _board.getNumRows() - 2) {
+						if(delta != -2 || delta != -1) { return false; }
+					} else {
+						if(delta != -1) { return false; }
+					}
+				} else if(_color == Black) {
+					if(_row == 1) {
+						if(delta != 2 || delta != 1) { return false; }
+					} else {
+						if(delta != 1) { return false; }
+					}
+				}
+
 				return true;
 			}
 

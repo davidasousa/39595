@@ -18,9 +18,6 @@ namespace Student
 				_string = (color == White) ? (char*) U'\u2656' : (char*) U'\u265C';
 			}
 			
-			// Destructor
-			virtual ~RookPiece() {};
-
 			virtual bool canMoveToLocation(int toRow, int toColumn) {
 				// Redundant Move
 				if(toRow == _row && toColumn == _column) { return false; }

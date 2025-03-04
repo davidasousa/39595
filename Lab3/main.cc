@@ -3,6 +3,8 @@
 #include "ChessBoard.hh"
 #include "ChessPiece.hh"
 
+int abs(int input) { return (input < 0) ? -input : input; }
+
 int test_part1_4x4_1()
 {
     // Config file content:
@@ -34,12 +36,55 @@ int test_part1_4x4_1()
 		// Testing The White Rook On 2,3
 		if(!sBoard.isValidMove(2, 3, 1, 3)) { return 1; }
 		if(sBoard.isValidMove(2, 3, 0, 3)) { return 1; }
+		if(sBoard.isValidMove(2, 3, -1, 3)) { return 1; }
+
+		// Testing The Black Rook On 1,1
+		if(!sBoard.isValidMove(1, 1, 1, 2)) { return 1; }
+		if(sBoard.isValidMove(1, 1, 1, 3)) { return 1; }
+		if(sBoard.isValidMove(2, 3, 0, 0)) { return 1; } // Diagonal Move
+		if(sBoard.isValidMove(2, 3, 2, 3)) { return 1; } // Redundant Move
 
     return 0;
+}
+
+int test_part1_4x4_2() {
+    Student::ChessBoard sBoard(4, 4);
+    sBoard.createChessPiece(White, Bishop, 0, 0);
+    sBoard.createChessPiece(Black, Bishop, 2, 2);
+    sBoard.createChessPiece(Black, Bishop, 3, 3);
+
+		if(sBoard.isValidMove(1, 1, 2, 2)) { return 1; }
+		if(!sBoard.isValidMove(0, 0, 2, 2)) { return 1; }
+		if(sBoard.isValidMove(0, 0, 3, 3)) { return 1; }
+		if(sBoard.isValidMove(0, 0, 2, 1)) { return 1; }
+
+		return 0;
+}
+
+int test_part1_4x4_3() {
+	Student::ChessBoard sBoard(4, 4);
+	sBoard.createChessPiece(Black, Pawn, 1, 0);
+	sBoard.createChessPiece(White, Pawn, 2, 1);
+
+	// Testing Black Pawn
+	if(sBoard.isValidMove(1, 0, 0, 0)) { return 1; }
+	if(sBoard.isValidMove(1, 0, 1, 2)) { return 1; }
+	if(!sBoard.isValidMove(1, 0, 2, 1)) { return 1; }
+	if(!sBoard.isValidMove(1, 0, 2, 0)) { return 1; }
+	if(!sBoard.isValidMove(1, 0, 3, 0)) { return 1; }
+
+	// Testing White Pawn
+	if(!sBoard.isValidMove(2, 1, 0, 1)) { return 1; }
+	if(sBoard.isValidMove(2, 1, 1, 2)) { return 1; }
+	if(!sBoard.isValidMove(2, 1, 1, 1)) { return 1; }
+	if(!sBoard.isValidMove(2, 1, 0, 1)) { return 1; }
+
+	return 0;
 }
 
 int main()
 {
     assert(test_part1_4x4_1() == 0);
+    assert(test_part1_4x4_2() == 0);
     return EXIT_SUCCESS;
 }
