@@ -3,6 +3,9 @@
 
 #include "ChessPiece.hh"
 
+// Helper Function
+int abs(int input) { return (input < 0) ? -input : input; }
+
 /**
  * Student implementation of a Bishop chess piece.
  * The class is defined within the Student namespace.

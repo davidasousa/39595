@@ -3,8 +3,6 @@
 #include "ChessBoard.hh"
 #include "ChessPiece.hh"
 
-int abs(int input) { return (input < 0) ? -input : input; }
-
 int test_part1_4x4_1()
 {
 	// Config file content:
