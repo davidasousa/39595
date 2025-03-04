@@ -242,7 +242,6 @@ int test_part1_4x4_5() {
 	if(sBoard.isValidMove(1, 0, 3, 2)) { return 1; }
 	if(sBoard.isValidMove(1, 0, 3, 3)) { return 1; }
 
-	std::cout << sBoard.displayBoard().str() << std::endl;
 	return 0;
 }
 
@@ -271,7 +270,6 @@ int test_part1_4x4_6() {
 	if(sBoard.isValidMove(3, 0, 3, 2)) { return 1; }
 	if(sBoard.isValidMove(3, 0, 3, 3)) { return 1; }
 
-	std::cout << sBoard.displayBoard().str() << std::endl;
 	return 0;
 }
 
@@ -289,7 +287,20 @@ int test_part1_4x4_7() {
 	if(sBoard.isValidMove(2, 1, 0, 1) == false) { return 1; }
 	if(sBoard.isValidMove(2, 1, 0, 0)) { return 1; }
 
+	return 0;
+}
+
+int test_part2_4x4_1() {
+	Student::ChessBoard sBoard(4, 4);
+	sBoard.createChessPiece(Black, Pawn, 0, 0);
+	sBoard.createChessPiece(White, Pawn, 2, 1);
+
 	std::cout << sBoard.displayBoard().str() << std::endl;
+	
+	if(!sBoard.movePiece(2, 1, 1, 1)) { return 1; }
+
+	std::cout << sBoard.displayBoard().str() << std::endl;
+
 	return 0;
 }
 
@@ -301,5 +312,6 @@ int main() {
 	assert(test_part1_4x4_5() == 0);
 	assert(test_part1_4x4_6() == 0);
 	assert(test_part1_4x4_7() == 0);
+	assert(test_part2_4x4_1() == 0);
 	return EXIT_SUCCESS;
 }

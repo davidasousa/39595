@@ -10,6 +10,7 @@ using Student::ChessBoard;
 ChessBoard::ChessBoard(int numRow, int numCol) {
 	numRows = numRow;
 	numCols = numCol;
+	turn = White;
 
 	// Initialize Board Vector
 	for(int idx = 0; idx < numRows; idx++) {
@@ -54,7 +55,15 @@ void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startCol
 }
 
 bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn) {
-	return false;
+	if(board[fromRow][fromColumn] -> getColor() != turn) { return false; }
+	if(!isValidMove(fromRow, fromColumn, toRow, toColumn)) { return false; }
+	// If Capture -> Delete & Remove Piece
+	if(board[toRow][toColumn] != nullptr) { delete board[toRow][toColumn]; }
+	board[toRow][toColumn] = board[fromRow][fromColumn];
+	board[fromRow][fromColumn] = nullptr;
+	// Changing Turn
+	turn = (turn == White) ? Black : White;
+	return true;
 }
 
 bool ChessBoard::isValidMove(int fromRow, int fromColumn, int toRow, int toColumn) {
@@ -62,6 +71,18 @@ bool ChessBoard::isValidMove(int fromRow, int fromColumn, int toRow, int toColum
 }
 
 bool ChessBoard::isPieceUnderThreat(int row, int column) {
+	// Piece Under Threat
+	for(int rowIdx = 0; rowIdx < numRows; rowIdx++) {
+		for(int colIdx = 0; colIdx < numCols; colIdx++) {
+			ChessPiece* threatPiece = board[rowIdx][colIdx];
+			if(threatPiece == nullptr) { continue; }
+
+			// If Piece Is Of Opposite Color
+			if(threatPiece -> getColor() != board[row][column] -> getColor()) {
+				if(isValidMove(rowIdx, colIdx, row, column)) { return true; }
+			}
+		}
+	}
 	return false;
 }
 
