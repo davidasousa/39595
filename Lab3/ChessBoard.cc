@@ -45,11 +45,9 @@ void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startCol
 	case Bishop:
 		newPiece = new BishopPiece(*this, col, startRow, startColumn);
 		break;
-	/*
 	case King:
 		newPiece = new KingPiece(*this, col, startRow, startColumn);
 		break;
-	*/
 	}
 	board[startRow][startColumn] = newPiece;
 }
@@ -58,12 +56,19 @@ bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn)
 	if(board[fromRow][fromColumn] == nullptr) { return false; }
 	if(board[fromRow][fromColumn] -> getColor() != turn) { return false; } // Out Of Turn
 	if(!isValidMove(fromRow, fromColumn, toRow, toColumn)) { return false; } // Invalid Move
+	
 	// If Capture -> Delete & Remove Piece
 	if(board[toRow][toColumn] != nullptr) { delete board[toRow][toColumn]; }
 
 	board[fromRow][fromColumn] -> setPosition(toRow, toColumn);
 	board[toRow][toColumn] = board[fromRow][fromColumn];
 	board[fromRow][fromColumn] = nullptr;
+
+	// Check King Move Into Check
+	if(board[toRow][toColumn] -> getType() == King) { 
+		if(isPieceUnderThreat(toRow, toColumn)) { return false; }
+	}
+
 	// Changing Turn
 	if(turn == White) { turn = Black; }
 	else if(turn == Black) { turn = White; }
