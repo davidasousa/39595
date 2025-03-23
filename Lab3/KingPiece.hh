@@ -7,6 +7,7 @@
  * Student implementation of a King chess piece.
  * The class is defined within the Student namespace.
  */
+
 namespace Student 
 {
 	class KingPiece : public ChessPiece {
@@ -29,6 +30,9 @@ namespace Student
 			// Check If To Square Has Same Color Piece
 			ChessPiece* destPiece = _board.getPiece(toRow, toColumn);
 			if(destPiece != nullptr && destPiece -> getColor() == _color) { return false; }
+
+			// Check If King Would Be In Check
+			if(_board.isKingInCheck(toRow, toColumn, _color)) { return false; }
 
 			// Ensure 1 Square Either Direction
 			int deltaX = abs(toRow - _row);
