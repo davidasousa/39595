@@ -14,7 +14,7 @@ namespace Student {
 			BishopPiece(ChessBoard& board, Color color, int row, int column) 
 				: ChessPiece(board, color, row, column) {
 				_type = Bishop;
-				_string = (color == White) ? (char*) u8"\u265D" : (char*) u8"\u2657" ;
+				_string = (color == White) ? (char*) u8"\u2657" : (char*) u8"\u265D" ;
 			}
 			
 			virtual bool canMoveToLocation(int toRow, int toColumn) {

@@ -15,7 +15,7 @@ namespace Student
 		KingPiece(ChessBoard& board, Color color, int row, int column) 
 			: ChessPiece(board, color, row, column) {
 			_type = King;
-			_string = (color == White) ? (char*) u8"\u265A" : (char*) u8"\u2654" ;
+			_string = (color == White) ? (char*) u8"\u2654" : (char*) u8"\u265A" ;
 		}
 		
 		virtual bool canMoveToLocation(int toRow, int toColumn) {
