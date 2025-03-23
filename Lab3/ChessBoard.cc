@@ -92,6 +92,8 @@ bool ChessBoard::isTempPieceUnderThreat(int row, int column, Color color) {
 	if(board[row][column] == nullptr) { 
 			createChessPiece(color, King, row, column);
 			if(isPieceUnderThreat(row, column)) { return true; }
+			delete board[row][column];
+			board[row][column] = nullptr;
 	} else {
 		ChessPiece* tempPiece = board[row][column];
 		createChessPiece(color, King, row, column);
