@@ -365,7 +365,6 @@ int test_part3_4x4_1() {
 
 	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(!sBoard.movePiece(3, 0, 2, 0)) { return 1; }
-	/*
 	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(!sBoard.movePiece(1, 3, 0, 2)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
@@ -376,7 +375,15 @@ int test_part3_4x4_1() {
 	if(sBoard.movePiece(1, 2, 0, 3)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(!sBoard.movePiece(2, 0, 3, 0)) { return 1; }
-	*/
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(!sBoard.movePiece(0, 1, 2, 1)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(!sBoard.movePiece(3, 2, 0, 2)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(!sBoard.movePiece(2, 1, 0, 1)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(sBoard.movePiece(0, 1, 3, 2)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
 
 	return 0;
 }

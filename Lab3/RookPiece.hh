@@ -45,7 +45,9 @@ namespace Student
 						if(_board.getPiece(_row, colIdx) != nullptr) { return false; }
 					}
 				}
-
+				
+				if(_board.isMoveCauseCheck(_row, _column, toRow, toColumn)) { return false; }
+				
 				return true;
 			}
 

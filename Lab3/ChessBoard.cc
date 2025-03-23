@@ -89,20 +89,46 @@ bool ChessBoard::isPieceUnderThreat(int row, int column) {
 }
 
 bool ChessBoard::isTempPieceUnderThreat(int row, int column, Color color) {
-	if(board[row][column] == nullptr) { 
-			createChessPiece(color, King, row, column);
-			if(isPieceUnderThreat(row, column)) { return true; }
-			delete board[row][column];
-			board[row][column] = nullptr;
-	} else {
-		ChessPiece* tempPiece = board[row][column];
-		createChessPiece(color, King, row, column);
-		if(isPieceUnderThreat(row, column)) { return true; }
-		delete board[row][column]; 
-		board[row][column] = nullptr;
-		board[row][column] = tempPiece;
-	}
+	ChessPiece* tempPiece = board[row][column];
+	createChessPiece(color, King, row, column);
+	if(isPieceUnderThreat(row, column)) { return true; }
+	delete board[row][column];
+	board[row][column] = nullptr;
+	board[row][column] = tempPiece;
 	return false;
+}
+
+bool ChessBoard::isMoveCauseCheck(int fromRow, int fromCol, int toRow, int toCol) {
+	bool res = false;
+	// Finding King
+	ChessPiece* kingPiece = nullptr;
+	for(int rowIdx = 0; rowIdx < numRows; rowIdx++) {
+		for(int colIdx = 0; colIdx < numCols; colIdx++) {
+			if(board[rowIdx][colIdx] == nullptr) { continue; }
+			if(board[rowIdx][colIdx] -> getType() == King) {
+				if(board[rowIdx][colIdx] -> getColor() == board[fromRow][fromCol] -> getColor()) { 
+					kingPiece = board[rowIdx][colIdx]; 
+				}
+			}
+		}
+	}
+	if(kingPiece == nullptr) { return res; }
+	// Saving And Taking Old Pieces Off Board
+	ChessPiece* tempFromPiece = board[fromRow][fromCol];
+	ChessPiece* tempToPiece = board[toRow][toCol];
+	board[fromRow][fromCol] = nullptr;
+	board[toRow][toCol] = nullptr;
+	// Creating New Piece
+	createChessPiece(tempFromPiece -> getColor(), tempFromPiece -> getType(), toRow, toCol);
+	// Checking
+	if(isPieceUnderThreat(kingPiece -> getRow(), kingPiece -> getColumn())) { res = true; }
+	// Removing New Piece
+	delete board[toRow][toCol];
+	board[toRow][toCol] = nullptr;	
+	// Moving Pieces Back
+	board[fromRow][fromCol] = tempFromPiece;	
+	board[toRow][toCol] = tempToPiece;
+	return res;	
 }
 
 std::ostringstream ChessBoard::displayBoard()

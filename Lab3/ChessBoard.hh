@@ -125,6 +125,8 @@ namespace Student
 
 			bool isTempPieceUnderThreat(int row, int column, Color color);
 
+			bool isMoveCauseCheck(int fromRow, int fromCol, int toRow, int toCol);
+
 			/**
 			 * @brief
 			 * Returns an output string stream displaying the layout of the board.
