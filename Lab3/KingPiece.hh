@@ -29,14 +29,12 @@ namespace Student
 			// Check If To Square Has Same Color Piece
 			ChessPiece* destPiece = _board.getPiece(toRow, toColumn);
 			if(destPiece != nullptr && destPiece -> getColor() == _color) { return false; }
-			// Columns Dont Change But Capture Happens
-			if(toColumn == _column && _board.getPiece(toRow, toColumn) != nullptr) { return false; }
 
 			// Ensure 1 Square Either Direction
 			int deltaX = abs(toRow - _row);
 			int deltaY = abs(toColumn - _column);
 
-			if(deltaX <= 1 && deltaY <= 1) { return false; }
+			if(deltaX > 1 || deltaY > 1) { return false; }
 
 			return true;
 		}
