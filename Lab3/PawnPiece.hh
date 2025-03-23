@@ -18,7 +18,7 @@ namespace Student
 			PawnPiece(ChessBoard& board, Color color, int row, int column) 
 				: ChessPiece(board, color, row, column) {
 				_type = Pawn;
-				_string = (color == White) ? (char*) u8"\u2659" : (char*) u8"\u265F";
+				_string = (color == White) ? (char*) u8"\u265F" : (char*) u8"\u2659";
 			}
 			
 			virtual bool canMoveToLocation(int toRow, int toColumn) {

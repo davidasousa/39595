@@ -123,6 +123,9 @@ namespace Student
 			 */
 			bool isPieceUnderThreat(int row, int column);
 
+			// Helper Function For Checking King In Check
+			bool isKingInCheck(int row, int column, Color kingCol);
+
 			/**
 			 * @brief
 			 * Returns an output string stream displaying the layout of the board.

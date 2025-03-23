@@ -52,10 +52,29 @@ void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startCol
 	board[startRow][startColumn] = newPiece;
 }
 
+// Helper Function For King
+bool ChessBoard::isKingInCheck(int row, int column, Color kingCol) {
+	for(int rowIdx = 0; rowIdx < numRows; rowIdx++) {
+		for(int colIdx = 0; colIdx < numCols; colIdx++) {
+			ChessPiece* threatPiece = board[rowIdx][colIdx];
+			if(threatPiece == nullptr) { continue; }
+			if(threatPiece -> getColor() == kingCol) { continue; }
+			if(isValidMove(rowIdx, colIdx, row, column)) { return true; }
+		}
+	}
+	return false; // No Piece Threatening
+}
+
 bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn) {
 	if(board[fromRow][fromColumn] == nullptr) { return false; }
 	if(board[fromRow][fromColumn] -> getColor() != turn) { return false; } // Out Of Turn
 	if(!isValidMove(fromRow, fromColumn, toRow, toColumn)) { return false; } // Invalid Move
+
+	// Check King In Check
+	if(board[fromRow][fromColumn] -> getType() == King) { 
+		Color kingCol = board[fromRow][fromColumn] -> getColor();
+		if(isKingInCheck(toRow, toColumn, kingCol)) { return false; }
+	} // King Would Not Be In Check
 	
 	// If Capture -> Delete & Remove Piece
 	if(board[toRow][toColumn] != nullptr) { delete board[toRow][toColumn]; }
@@ -63,17 +82,6 @@ bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn)
 	board[fromRow][fromColumn] -> setPosition(toRow, toColumn);
 	board[toRow][toColumn] = board[fromRow][fromColumn];
 	board[fromRow][fromColumn] = nullptr;
-
-	// Check King In Check
-	if(board[toRow][toColumn] -> getType() == King) { 
-		if(isPieceUnderThreat(toRow, toColumn)) { 
-			// Move Back
-			board[toRow][toColumn] -> setPosition(fromRow, fromColumn);
-			board[fromRow][fromColumn] = board[toRow][toColumn];
-			board[toRow][toColumn] = nullptr;
-			return false; 
-		}
-	}
 
 	// Changing Turn
 	if(turn == White) { turn = Black; }
@@ -93,7 +101,6 @@ bool ChessBoard::isPieceUnderThreat(int row, int column) {
 			ChessPiece* threatPiece = board[rowIdx][colIdx];
 			if(threatPiece == nullptr) { continue; }
 			if(threatPiece -> getColor() == board[row][column] -> getColor()) { continue; }
-
 			if(isValidMove(rowIdx, colIdx, row, column)) { return true; }
 		}
 	}
