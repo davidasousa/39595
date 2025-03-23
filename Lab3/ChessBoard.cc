@@ -52,19 +52,6 @@ void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startCol
 	board[startRow][startColumn] = newPiece;
 }
 
-// Helper Function For King
-bool ChessBoard::isKingInCheck(int row, int column, Color kingCol) {
-	for(int rowIdx = 0; rowIdx < numRows; rowIdx++) {
-		for(int colIdx = 0; colIdx < numCols; colIdx++) {
-			ChessPiece* threatPiece = board[rowIdx][colIdx];
-			if(threatPiece == nullptr) { continue; }
-			if(threatPiece -> getColor() == kingCol) { continue; }
-			if(isValidMove(rowIdx, colIdx, row, column)) { return true; }
-		}
-	}
-	return false; // No Piece Threatening
-}
-
 bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn) {
 	if(board[fromRow][fromColumn] == nullptr) { return false; }
 	if(board[fromRow][fromColumn] -> getColor() != turn) { return false; } // Out Of Turn
@@ -99,6 +86,19 @@ bool ChessBoard::isPieceUnderThreat(int row, int column) {
 		}
 	}
 	return false; // No Piece Threatening
+}
+
+bool ChessBoard::isTempPieceUnderThreat(int row, int column, Color color) {
+	if(board[row][column] == nullptr) { 
+			createChessPiece(color, King, row, column);
+			if(isPieceUnderThreat(row, column)) { return true; }
+	} else {
+		ChessPiece* tempPiece = board[row][column];
+		createChessPiece(color, King, row, column);
+		if(isPieceUnderThreat(row, column)) { return true; }
+		board[row][column] = tempPiece;
+	}
+	return false;
 }
 
 std::ostringstream ChessBoard::displayBoard()

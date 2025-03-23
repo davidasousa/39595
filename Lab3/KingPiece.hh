@@ -31,14 +31,14 @@ namespace Student
 			ChessPiece* destPiece = _board.getPiece(toRow, toColumn);
 			if(destPiece != nullptr && destPiece -> getColor() == _color) { return false; }
 
-			// Check If King Would Be In Check
-			if(_board.isKingInCheck(toRow, toColumn, _color)) { return false; }
-
 			// Ensure 1 Square Either Direction
 			int deltaX = abs(toRow - _row);
 			int deltaY = abs(toColumn - _column);
 
 			if(deltaX > 1 || deltaY > 1) { return false; }
+
+			// Check If King Would Be Under Threat
+			if(_board.isTempPieceUnderThreat(toRow, toColumn, _color)) { return false; }
 
 			return true;
 		}

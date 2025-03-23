@@ -123,8 +123,7 @@ namespace Student
 			 */
 			bool isPieceUnderThreat(int row, int column);
 
-			// Helper Function For Checking King In Check
-			bool isKingInCheck(int row, int column, Color kingCol);
+			bool isTempPieceUnderThreat(int row, int column, Color color);
 
 			/**
 			 * @brief
