@@ -64,9 +64,15 @@ bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn)
 	board[toRow][toColumn] = board[fromRow][fromColumn];
 	board[fromRow][fromColumn] = nullptr;
 
-	// Check King Move Into Check
+	// Check King In Check
 	if(board[toRow][toColumn] -> getType() == King) { 
-		if(isPieceUnderThreat(toRow, toColumn)) { return false; }
+		if(isPieceUnderThreat(toRow, toColumn)) { 
+			// Move Back
+			board[toRow][toColumn] -> setPosition(fromRow, fromColumn);
+			board[fromRow][fromColumn] = board[toRow][toColumn];
+			board[toRow][toColumn] = nullptr;
+			return false; 
+		}
 	}
 
 	// Changing Turn

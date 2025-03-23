@@ -36,7 +36,7 @@ namespace Student
 			int deltaX = abs(toRow - _row);
 			int deltaY = abs(toColumn - _column);
 
-			if(deltaX > 1 || deltaY > 1) { return false; }
+			if(deltaX <= 1 && deltaY <= 1) { return false; }
 
 			return true;
 		}
