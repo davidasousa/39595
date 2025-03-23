@@ -362,7 +362,8 @@ int test_part3_4x4_1() {
 	sBoard.createChessPiece(Black, King, 0, 0);
 	sBoard.createChessPiece(White, King, 3, 0);
 
-
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(sBoard.movePiece(3, 0, 3, 1)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
 
 	return 0;
