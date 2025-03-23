@@ -70,12 +70,6 @@ bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn)
 	if(board[fromRow][fromColumn] -> getColor() != turn) { return false; } // Out Of Turn
 	if(!isValidMove(fromRow, fromColumn, toRow, toColumn)) { return false; } // Invalid Move
 
-	// Check King In Check
-	if(board[fromRow][fromColumn] -> getType() == King) { 
-		Color kingCol = board[fromRow][fromColumn] -> getColor();
-		if(isKingInCheck(toRow, toColumn, kingCol)) { return false; }
-	} // King Would Not Be In Check
-	
 	// If Capture -> Delete & Remove Piece
 	if(board[toRow][toColumn] != nullptr) { delete board[toRow][toColumn]; }
 
