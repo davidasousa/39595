@@ -39,6 +39,9 @@ namespace Student
 			// Destructor 
 			~ChessBoard();
 
+			// Clone Function 
+			void* clone(int row, int col);
+
 			/**
 			 * @return
 			 * Number of rows in chess board.

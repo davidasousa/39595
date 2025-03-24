@@ -33,6 +33,20 @@ ChessBoard::~ChessBoard() {
 	}
 }
 
+// Clone Function
+void* ChessBoard::clone(int row, int col) {
+	if(board[row][col] == nullptr) { return nullptr; }
+	Color pieceColor = board[row][col] -> getColor();
+	ChessPiece* newPiece = nullptr;
+	switch(board[row][col] -> getType()) {
+	case King: newPiece = new KingPiece(*this, pieceColor, row, col); break;
+	case Pawn: newPiece = new PawnPiece(*this, pieceColor, row, col); break;
+	case Bishop: newPiece = new BishopPiece(*this, pieceColor, row, col); break;
+	case Rook: newPiece = new RookPiece(*this, pieceColor, row, col); break;
+	}
+	return newPiece;
+}
+
 // Creating Chess Piece
 void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startColumn) {
 	if(board[startRow][startColumn] != nullptr) { 
@@ -62,6 +76,10 @@ bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn)
 	if(turn != board[fromRow][fromColumn] -> getColor()) { return false; }
 	if(board[fromRow][fromColumn] -> getColor() != turn) { return false; } // Out Of Turn
 	if(!isValidMove(fromRow, fromColumn, toRow, toColumn)) { return false; } // Invalid Move
+
+	if(board[toRow][toColumn] == nullptr) { 
+		std::cout << "f" << toRow << toColumn << std::endl << std::flush; 
+	}
 
 	// If Capture -> Delete & Remove Piece
 	if(board[toRow][toColumn] != nullptr) { delete board[toRow][toColumn]; }
@@ -96,25 +114,23 @@ bool ChessBoard::isPieceUnderThreat(int row, int column) {
 }
 
 bool ChessBoard::isTempPieceUnderThreat(int row, int column, Color color) {
-	ChessPiece* tempPiece = board[row][column];
+	bool ans = false;
+	ChessPiece* tempPiece = (ChessPiece*) clone(row, column);
 	createChessPiece(color, King, row, column);
-	if(isPieceUnderThreat(row, column)) { 
-		delete board[row][column];
-		board[row][column] = tempPiece;
-		return true; 
-	}
+
+	if(isPieceUnderThreat(row, column)) { ans = true; }
 	delete board[row][column];
+
 	board[row][column] = tempPiece;
-	return false;
+	return ans;
 }
 
 bool ChessBoard::isMoveCauseCheck(int fromRow, int fromCol, int toRow, int toCol) {
 	bool res = false;
-	std::cout << fromRow << fromCol << std::endl << std::flush;
 	Color pieceColor = board[fromRow][fromCol] -> getColor();
 	// Finding King
 	ChessPiece* kingPiece = nullptr;
-	if(turn == pieceColor) {
+	if(turn == pieceColor) { // Only Consider Safety Of King Whose Turn It Is
 		for(int rowIdx = 0; rowIdx < numRows; rowIdx++) {
 			for(int colIdx = 0; colIdx < numCols; colIdx++) {
 				if(board[rowIdx][colIdx] == nullptr) { continue; }
@@ -128,19 +144,24 @@ bool ChessBoard::isMoveCauseCheck(int fromRow, int fromCol, int toRow, int toCol
 	}
 	if(kingPiece == nullptr) { return res; }
 	// Saving And Taking Old Pieces Off Board
-	ChessPiece* tempFromPiece = board[fromRow][fromCol];
-	ChessPiece* tempToPiece = board[toRow][toCol];
+	ChessPiece* tempFromPiece = (ChessPiece*) clone(fromRow, fromCol);
+	ChessPiece* tempToPiece = (ChessPiece*) clone(toRow, toCol);
+	delete board[fromRow][fromCol];
+	delete board[toRow][toCol];
 	board[fromRow][fromCol] = nullptr;
 	board[toRow][toCol] = nullptr;
+
 	// Creating New Piece
 	createChessPiece(tempFromPiece -> getColor(), tempFromPiece -> getType(), toRow, toCol);
 	// Checking
 	if(isPieceUnderThreat(kingPiece -> getRow(), kingPiece -> getColumn())) { res = true; }
-	// Removing New Piece
 	delete board[toRow][toCol];
+	board[toRow][toCol] = nullptr;
+
 	// Moving Pieces Back
 	board[fromRow][fromCol] = tempFromPiece;	
 	board[toRow][toCol] = tempToPiece;
+	// Returning Result
 	return res;	
 }
 
