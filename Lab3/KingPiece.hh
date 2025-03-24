@@ -38,7 +38,7 @@ namespace Student
 			if(deltaX > 1 || deltaY > 1) { return false; }
 
 			// Check If King Would Be Under Threat
-			if(_board.isTempPieceUnderThreat(toRow, toColumn, _color)) { return false; }
+			if(_board.isTempPieceUnderThreat(_row, _column, toRow, toColumn)) { return false; }
 
 			return true;
 		}

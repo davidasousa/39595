@@ -126,7 +126,7 @@ namespace Student
 			 */
 			bool isPieceUnderThreat(int row, int column);
 
-			bool isTempPieceUnderThreat(int row, int column, Color color);
+			bool isTempPieceUnderThreat(int fromRow, int fromCol, int toRow, int toCol);
 
 			bool isMoveCauseCheck(int fromRow, int fromCol, int toRow, int toCol);
 

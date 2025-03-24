@@ -109,15 +109,27 @@ bool ChessBoard::isPieceUnderThreat(int row, int column) {
 	return false; // No Piece Threatening
 }
 
-bool ChessBoard::isTempPieceUnderThreat(int row, int column, Color color) {
+bool ChessBoard::isTempPieceUnderThreat(int fromRow, int fromCol, int toRow, int toCol) {
 	bool ans = false;
-	ChessPiece* tempPiece = (ChessPiece*) clone(row, column);
-	createChessPiece(color, King, row, column);
+	Color color = board[fromRow][fromCol] -> getColor();
 
-	if(isPieceUnderThreat(row, column)) { ans = true; }
-	delete board[row][column];
+	// Saving Old Pieces
+	ChessPiece* tempPiece = (ChessPiece*) clone(toRow, toCol);
+	ChessPiece* tempKing = (ChessPiece*) clone(fromRow, fromCol);
+	delete board[toRow][toCol];
+	delete board[fromRow][fromCol];
+	board[toRow][toCol] = nullptr;
+	board[fromRow][fromCol] = nullptr;
 
-	board[row][column] = tempPiece;
+	// Testing New Board
+	createChessPiece(color, King, toRow, toCol);
+	if(isPieceUnderThreat(toRow, toCol)) { ans = true; }
+
+	// Restoring Board
+	delete board[toRow][toCol];
+	board[toRow][toCol] = tempPiece;
+	board[fromRow][fromCol] = tempKing;
+
 	return ans;
 }
 
