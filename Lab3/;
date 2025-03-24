@@ -104,11 +104,13 @@ bool ChessBoard::isPieceUnderThreat(int row, int column) {
 			if(threatPiece == nullptr) { continue; }
 			if(threatPiece -> getColor() == pieceColor) { continue; }
 			
-			// Check If Piece Within Range Of A Enemy King But Our King Is Protecting
 			if(threatPiece -> getType() == King) {
+			// Check If Two Kings Are Touching
+				std::cout << row << column << rowIdx << colIdx << "\n";
 				int deltaX = abs(row - rowIdx);
 				int deltaY = abs(column - colIdx);
 				if(deltaX <= 1 && deltaY <= 1) { 
+					std::cout << "yes" << std::flush;
 					return true; 
 				}
 			} else if(isValidMove(rowIdx, colIdx, row, column)) { return true; }
