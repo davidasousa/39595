@@ -116,7 +116,15 @@ bool ChessBoard::isPieceUnderThreat(int row, int column) {
 			ChessPiece* threatPiece = board[rowIdx][colIdx];
 			if(threatPiece == nullptr) { continue; }
 			if(threatPiece -> getColor() == pieceColor) { continue; }
-			if(isValidMove(rowIdx, colIdx, row, column)) { return true; }
+
+			// Check If Piece Within Range Of A Enemy King But Our King Is Protecting
+			if(threatPiece -> getType() == King) {
+				int deltaX = abs(row - rowIdx);
+				int deltaY = abs(column - colIdx);
+				if(deltaX <= 1 && deltaY <= 1) { 
+					return true; 
+				}
+			} else if(isValidMove(rowIdx, colIdx, row, column)) { return true; }
 		}
 	}
 	return false; // No Piece Threatening

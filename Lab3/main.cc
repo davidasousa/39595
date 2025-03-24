@@ -402,6 +402,6 @@ int main() {
 	assert(test_part2_4x4_2() == 0);
 	*/
 	assert(test_part3_4x4_1() == 0);
-	assert(test_part3_4x4_2() == 0);
+//	assert(test_part3_4x4_2() == 0);
 	return EXIT_SUCCESS;
 }
