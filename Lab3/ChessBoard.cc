@@ -192,18 +192,6 @@ bool ChessBoard::isMoveCauseCheck(int fromRow, int fromCol, int toRow, int toCol
 	board[fromRow][fromCol] = nullptr;
 	board[toRow][toCol] = nullptr;
 
-	// If King Was Already In Check
-	if(isPieceUnderThreat(kingPiece -> getRow(), kingPiece -> getColumn())) { 
-		res = false; 
-		delete board[toRow][toCol];
-		board[toRow][toCol] = nullptr;
-
-		// Moving Pieces Back
-		board[fromRow][fromCol] = tempFromPiece;	
-		board[toRow][toCol] = tempToPiece;
-		// Returning Result
-		return res;
-	}
 	// Creating New Piece
 	createChessPiece(tempFromPiece -> getColor(), tempFromPiece -> getType(), toRow, toCol);
 	// Checking
