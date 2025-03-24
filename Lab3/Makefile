@@ -6,6 +6,7 @@ APP=chess
 
 custom_tests:
 	$(CC) $(C_FLAGS) $(SRC_FILES) main.cc -o $(APP)
+	./chess
 
 valgrind:
 	valgrind --leak-check=full ./$(APP) $(TEST)

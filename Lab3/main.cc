@@ -378,54 +378,68 @@ int test_part3_4x4_1() {
 	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(!sBoard.movePiece(3,1,3,2)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	/*
-	if(sBoard.movePiece(1,0,1,1)) { return 1; }
+	if(!sBoard.movePiece(1,0,1,1)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(3,2,2,3)) { return 1; }
+	if(!sBoard.movePiece(3,2,2,3)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(sBoard.movePiece(3,3,2,1)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(1,1,1,0)) { return 1; }
+	if(!sBoard.movePiece(1,1,1,0)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(0,3,0,2)) { return 1; }
+	if(!sBoard.movePiece(0,3,0,2)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(1,0,2,0)) { return 1; }
+	if(!sBoard.movePiece(1,0,2,0)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(3,0,0,3)) { return 1; }
+	if(!sBoard.movePiece(3,0,0,3)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(sBoard.movePiece(2,1,3,0)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(2,0,3,1)) { return 1; }
+	if(!sBoard.movePiece(2,0,3,1)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(0,3,1,2)) { return 1; }
+	if(!sBoard.movePiece(0,3,1,2)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(3,1,2,0)) { return 1; }
+	if(!sBoard.movePiece(3,1,2,0)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(!sBoard.movePiece(2,3,3,3)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(sBoard.movePiece(3,0,1,2)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(2,0,1,0)) { return 1; }
+	if(!sBoard.movePiece(2,0,1,0)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(1,2,2,1)) { return 1; }
+	if(!sBoard.movePiece(1,2,2,1)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(1,0,2,1)) { return 1; }
+	if(!sBoard.movePiece(1,0,2,1)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(0,2,3,2)) { return 1; }
+	if(!sBoard.movePiece(0,2,3,2)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(sBoard.movePiece(1,2,0,2)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(2,1,2,0)) { return 1; }
+	if(!sBoard.movePiece(2,1,2,0)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(3,2,1,2)) { return 1; }
+	if(!sBoard.movePiece(3,2,1,2)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(2,0,3,1)) { return 1; }
+	if(!sBoard.movePiece(2,0,3,1)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(1,2,2,2)) { return 1; }
+	if(!sBoard.movePiece(1,2,2,2)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(0,3,1,2)) { return 1; }
+	if(sBoard.movePiece(0,0,3,2)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	*/
+	if(!sBoard.movePiece(3,1,3,0)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(!sBoard.movePiece(3,3,3,2)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(sBoard.movePiece(1,2,1,0)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(sBoard.movePiece(2,3,3,1)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(sBoard.movePiece(0,1,3,3)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(sBoard.movePiece(0,2,0,3)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(sBoard.movePiece(0,1,3,2)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(sBoard.movePiece(2,2,2,0)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
 
 	return 0;
 }
