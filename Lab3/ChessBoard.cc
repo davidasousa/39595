@@ -34,6 +34,7 @@ ChessBoard::~ChessBoard() {
 
 // Creating Chess Piece
 void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startColumn) {
+	if(board[startRow][startColumn] != nullptr) { return; }
 	ChessPiece* newPiece = nullptr;
 	switch(ty) {
 	case Pawn:
@@ -127,7 +128,6 @@ bool ChessBoard::isMoveCauseCheck(int fromRow, int fromCol, int toRow, int toCol
 	if(isPieceUnderThreat(kingPiece -> getRow(), kingPiece -> getColumn())) { res = true; }
 	// Removing New Piece
 	delete board[toRow][toCol];
-	board[toRow][toCol] = nullptr;	
 	// Moving Pieces Back
 	board[fromRow][fromCol] = tempFromPiece;	
 	board[toRow][toCol] = tempToPiece;
