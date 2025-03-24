@@ -91,9 +91,12 @@ bool ChessBoard::isPieceUnderThreat(int row, int column) {
 bool ChessBoard::isTempPieceUnderThreat(int row, int column, Color color) {
 	ChessPiece* tempPiece = board[row][column];
 	createChessPiece(color, King, row, column);
-	if(isPieceUnderThreat(row, column)) { return true; }
+	if(isPieceUnderThreat(row, column)) { 
+		delete board[row][column];
+		board[row][column] = tempPiece;
+		return true; 
+	}
 	delete board[row][column];
-	board[row][column] = nullptr;
 	board[row][column] = tempPiece;
 	return false;
 }
