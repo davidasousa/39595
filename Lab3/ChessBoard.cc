@@ -3,6 +3,7 @@
 #include "RookPiece.hh"
 #include "BishopPiece.hh"
 #include "KingPiece.hh"
+#include <iostream>
 
 using Student::ChessBoard;
 
@@ -58,6 +59,7 @@ void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startCol
 
 bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn) {
 	if(board[fromRow][fromColumn] == nullptr) { return false; }
+	if(turn != board[fromRow][fromColumn] -> getColor()) { return false; }
 	if(board[fromRow][fromColumn] -> getColor() != turn) { return false; } // Out Of Turn
 	if(!isValidMove(fromRow, fromColumn, toRow, toColumn)) { return false; } // Invalid Move
 
@@ -80,12 +82,13 @@ bool ChessBoard::isValidMove(int fromRow, int fromColumn, int toRow, int toColum
 
 bool ChessBoard::isPieceUnderThreat(int row, int column) {
 	if(board[row][column] == nullptr) { return false; }
+	Color pieceColor = board[row][column] -> getColor();
 	// Piece Under Threat
 	for(int rowIdx = 0; rowIdx < numRows; rowIdx++) {
 		for(int colIdx = 0; colIdx < numCols; colIdx++) {
 			ChessPiece* threatPiece = board[rowIdx][colIdx];
 			if(threatPiece == nullptr) { continue; }
-			if(threatPiece -> getColor() == board[row][column] -> getColor()) { continue; }
+			if(threatPiece -> getColor() == pieceColor) { continue; }
 			if(isValidMove(rowIdx, colIdx, row, column)) { return true; }
 		}
 	}
@@ -107,14 +110,18 @@ bool ChessBoard::isTempPieceUnderThreat(int row, int column, Color color) {
 
 bool ChessBoard::isMoveCauseCheck(int fromRow, int fromCol, int toRow, int toCol) {
 	bool res = false;
+	std::cout << fromRow << fromCol << std::endl << std::flush;
+	Color pieceColor = board[fromRow][fromCol] -> getColor();
 	// Finding King
 	ChessPiece* kingPiece = nullptr;
-	for(int rowIdx = 0; rowIdx < numRows; rowIdx++) {
-		for(int colIdx = 0; colIdx < numCols; colIdx++) {
-			if(board[rowIdx][colIdx] == nullptr) { continue; }
-			if(board[rowIdx][colIdx] -> getType() == King) {
-				if(board[rowIdx][colIdx] -> getColor() == board[fromRow][fromCol] -> getColor()) { 
-					kingPiece = board[rowIdx][colIdx]; 
+	if(turn == pieceColor) {
+		for(int rowIdx = 0; rowIdx < numRows; rowIdx++) {
+			for(int colIdx = 0; colIdx < numCols; colIdx++) {
+				if(board[rowIdx][colIdx] == nullptr) { continue; }
+				if(board[rowIdx][colIdx] -> getType() == King) {
+					if(board[rowIdx][colIdx] -> getColor() == pieceColor) { 
+						kingPiece = board[rowIdx][colIdx]; 
+					}
 				}
 			}
 		}
