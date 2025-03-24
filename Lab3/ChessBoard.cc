@@ -34,7 +34,10 @@ ChessBoard::~ChessBoard() {
 
 // Creating Chess Piece
 void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startColumn) {
-	if(board[startRow][startColumn] != nullptr) { return; }
+	if(board[startRow][startColumn] != nullptr) { 
+		delete board[startRow][startColumn]; 
+		board[startRow][startColumn] = nullptr;
+	}
 	ChessPiece* newPiece = nullptr;
 	switch(ty) {
 	case Pawn:
