@@ -130,6 +130,8 @@ namespace Student
 
 			bool isMoveCauseCheck(int fromRow, int fromCol, int toRow, int toCol);
 
+			bool isKingUnderThreat(Color color);
+
 			/**
 			 * @brief
 			 * Returns an output string stream displaying the layout of the board.

@@ -47,6 +47,19 @@ void* ChessBoard::clone(int row, int col) {
 	return newPiece;
 }
 
+bool ChessBoard::isKingUnderThreat(Color color) {
+	for(int rowIdx = 0; rowIdx < numRows; rowIdx++) {
+		for(int colIdx = 0; colIdx < numCols; colIdx++) {
+			if(board[rowIdx][colIdx] == nullptr) { continue; }
+			if(board[rowIdx][colIdx] -> getColor() == color) { continue; }
+			if(board[rowIdx][colIdx] -> getType() == King) { 
+				if(isPieceUnderThreat(rowIdx,colIdx)) { return true; }
+			}
+		}
+	}
+	return false;
+}
+
 // Creating Chess Piece
 void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startColumn) {
 	if(board[startRow][startColumn] != nullptr) { 
@@ -170,7 +183,7 @@ bool ChessBoard::isMoveCauseCheck(int fromRow, int fromCol, int toRow, int toCol
 			}
 		}
 	}
-	if(kingPiece == nullptr) { return res; }
+	if(kingPiece == nullptr) { return res; } 
 	// Saving And Taking Old Pieces Off Board
 	ChessPiece* tempFromPiece = (ChessPiece*) clone(fromRow, fromCol);
 	ChessPiece* tempToPiece = (ChessPiece*) clone(toRow, toCol);
@@ -179,6 +192,18 @@ bool ChessBoard::isMoveCauseCheck(int fromRow, int fromCol, int toRow, int toCol
 	board[fromRow][fromCol] = nullptr;
 	board[toRow][toCol] = nullptr;
 
+	// If King Was Already In Check
+	if(isPieceUnderThreat(kingPiece -> getRow(), kingPiece -> getColumn())) { 
+		res = false; 
+		delete board[toRow][toCol];
+		board[toRow][toCol] = nullptr;
+
+		// Moving Pieces Back
+		board[fromRow][fromCol] = tempFromPiece;	
+		board[toRow][toCol] = tempToPiece;
+		// Returning Result
+		return res;
+	}
 	// Creating New Piece
 	createChessPiece(tempFromPiece -> getColor(), tempFromPiece -> getType(), toRow, toCol);
 	// Checking
