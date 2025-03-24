@@ -116,6 +116,26 @@ bool ChessBoard::isTempPieceUnderThreat(int fromRow, int fromCol, int toRow, int
 	// Saving Old Pieces
 	ChessPiece* tempPiece = (ChessPiece*) clone(toRow, toCol);
 	ChessPiece* tempKing = (ChessPiece*) clone(fromRow, fromCol);
+	
+	// Check If Two Kings Are Touching
+	for(int rowIdx = 0; rowIdx < numRows; rowIdx++) {
+		for(int colIdx = 0; colIdx < numCols; colIdx++) {
+			if(board[rowIdx][colIdx] == nullptr) { continue; }
+			if(rowIdx == toRow && colIdx == toCol) { continue; }
+			if(rowIdx == fromRow && colIdx == fromCol) { continue; }
+			if(board[rowIdx][colIdx] -> getType() == King) { 
+				int deltaX = abs(toRow - rowIdx);
+				int deltaY = abs(toCol - colIdx);
+				if(deltaX <= 1 && deltaY <= 1) { 
+					delete tempPiece;
+					delete tempKing;
+					return true; 
+				}
+			}
+		}
+	}
+	// End Two King Touching
+
 	delete board[toRow][toCol];
 	delete board[fromRow][fromCol];
 	board[toRow][toCol] = nullptr;
