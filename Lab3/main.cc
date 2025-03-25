@@ -363,12 +363,12 @@ int test_part3_4x4_1() {
 	sBoard.createChessPiece(Black, King, 0 ,0);
 	sBoard.createChessPiece(White, King, 3 ,0);
 
-	if(!sBoard.movePiece(3,0,2,0)) { return 1; }
 
+	if(!sBoard.movePiece(3,0,2,0)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl << std::flush;
 	if(sBoard.isValidMove(2, 0, 1, 0)) { return 1; }
 	if(sBoard.isValidMove(2, 0, 1, 1)) { return 1; }
 	if(sBoard.isValidMove(2, 0, 2, 1)) { return 1; }
-
 	if(sBoard.isValidMove(0, 0, 1, 0)) { return 1; }
 	return 0;
 }
@@ -402,6 +402,6 @@ int main() {
 	assert(test_part2_4x4_2() == 0);
 	*/
 	assert(test_part3_4x4_1() == 0);
-//	assert(test_part3_4x4_2() == 0);
+	assert(test_part3_4x4_2() == 0);
 	return EXIT_SUCCESS;
 }

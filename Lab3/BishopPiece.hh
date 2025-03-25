@@ -56,8 +56,6 @@ namespace Student {
 					}
 				}
 
-				if(_board.isMoveCauseCheck(_row, _column, toRow, toColumn)) { return false; }
-
 				return true;
 			}
 

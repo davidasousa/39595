@@ -85,9 +85,10 @@ void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startCol
 }
 
 bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn) {
-	if(board[fromRow][fromColumn] == nullptr) { return false; }
-	if(turn != board[fromRow][fromColumn] -> getColor()) { return false; }
-	if(board[fromRow][fromColumn] -> getColor() != turn) { return false; } // Out Of Turn
+	ChessPiece* piece = board[fromRow][toRow];
+	if(piece == nullptr) { return false; }
+	if(turn != piece -> getColor()) { return false; }
+	if(piece -> getColor() != turn) { return false; } // Out Of Turn
 	if(!isValidMove(fromRow, fromColumn, toRow, toColumn)) { return false; } // Invalid Move
 
 	// If Capture -> Delete & Remove Piece
@@ -104,7 +105,13 @@ bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn)
 }
 
 bool ChessBoard::isValidMove(int fromRow, int fromColumn, int toRow, int toColumn) {
-	return board[fromRow][fromColumn] -> canMoveToLocation(toRow, toColumn);
+	if(!board[fromRow][fromColumn] -> canMoveToLocation(toRow, toColumn)) { return false; }
+	if(board[fromRow][fromColumn] -> getType() == King) {
+		if(isTempPieceUnderThreat(fromRow, fromColumn, toRow, toColumn)) { return false; }
+	} else {
+		if(isMoveCauseCheck(fromRow, fromColumn, toRow, toColumn)) { return false; }
+	}
+	return true;
 }
 
 bool ChessBoard::isPieceUnderThreat(int row, int column) {
@@ -124,7 +131,7 @@ bool ChessBoard::isPieceUnderThreat(int row, int column) {
 				if(deltaX <= 1 && deltaY <= 1) { 
 					return true; 
 				}
-			} else if(isValidMove(rowIdx, colIdx, row, column)) { return true; }
+			} else if(board[rowIdx][colIdx] -> canMoveToLocation(row, column)) { return true; }
 		}
 	}
 	return false; // No Piece Threatening

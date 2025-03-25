@@ -68,8 +68,6 @@ namespace Student
 				if(delta == -2 && _board.getPiece(_row - 1, toColumn) != nullptr) { return false; }
 				if(delta == 2 && _board.getPiece(_row + 1, toColumn) != nullptr) { return false; }
 					
-				if(_board.isMoveCauseCheck(_row, _column, toRow, toColumn)) { return false; }
-
 				return true;
 			}
 
