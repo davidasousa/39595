@@ -110,11 +110,11 @@ bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn)
 			board[fromRow][fromColumn - 1] = otherPiece;
 		} else {
 			// Move The King
-			board[fromRow][fromColumn] -> setPosition(fromRow, fromColumn + 2);
-			board[toRow][fromColumn + 2] = board[fromRow][fromColumn];
+			kingPiece -> setPosition(fromRow, fromColumn + 2);
+			board[toRow][fromColumn + 2] = kingPiece;
 			// Move The Rook
-			board[crY][crX] -> setPosition(fromRow, fromColumn + 1);
-			board[toRow][fromColumn + 1] = board[crY][crX];
+			otherPiece -> setPosition(fromRow, fromColumn + 1);
+			board[toRow][fromColumn + 1] = otherPiece;
 		}
 		return true;
 	}
@@ -229,10 +229,8 @@ bool ChessBoard::isMoveCauseCheck(int fromRow, int fromCol, int toRow, int toCol
 	}
 	if(kingPiece == nullptr) { return res; } 
 	// Saving And Taking Old Pieces Off Board
-	ChessPiece* tempFromPiece = (ChessPiece*) clone(fromRow, fromCol);
-	ChessPiece* tempToPiece = (ChessPiece*) clone(toRow, toCol);
-  delete board[fromRow][fromCol];
-	delete board[toRow][toCol];
+	ChessPiece* tempFromPiece = board[fromRow][fromCol];
+	ChessPiece* tempToPiece = board[toRow][toCol];
 	board[fromRow][fromCol] = nullptr;
 	board[toRow][toCol] = nullptr;
 

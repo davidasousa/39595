@@ -1,5 +1,6 @@
 #ifndef __KINGPIECE_H__
 #define __KINGPIECE_H__
+#include <iostream>
 
 #include "ChessPiece.hh"
 

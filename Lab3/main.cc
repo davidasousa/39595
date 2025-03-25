@@ -436,15 +436,25 @@ int test_part4_8x8_3() {
 	sBoard.createChessPiece(White, King, 0, 3);
 	sBoard.createChessPiece(Black, Bishop, 0, 4);
 
-	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(sBoard.movePiece(0,3,0,5)) { return 1; }
-	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(!sBoard.movePiece(0,3,0,1)) { return 1; }
-	std::cout << sBoard.displayBoard().str() << std::endl;
 
 	return 0;
 }
 
+int test_part4_8x8_4() {
+	Student::ChessBoard sBoard(8, 8);
+	sBoard.createChessPiece(White, Rook, 0, 7);
+	sBoard.createChessPiece(White, Rook, 0, 0);
+	sBoard.createChessPiece(White, King, 0, 3);
+
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(!sBoard.movePiece(0,3,0,5)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(sBoard.movePiece(0,3,0,1)) { return 1; }
+
+	return 0;
+}
 
 int main() {
 	assert(test_part1_4x4_1() == 0);
@@ -462,5 +472,6 @@ int main() {
 	assert(test_part4_8x8_1() == 0);
 	assert(test_part4_8x8_2() == 0);
 	assert(test_part4_8x8_3() == 0);
+	assert(test_part4_8x8_4() == 0);
 	return EXIT_SUCCESS;
 }
