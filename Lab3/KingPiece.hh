@@ -83,13 +83,12 @@ namespace Student
 			if(abs(castleRook -> getColumn() - _column) <= 2) { return false; }
 
 			// Check If The King Would Be Under Threat
+			if(_board.isPieceUnderThreat(_row, _column)) { return false; }
 			if(deltaX == 2) {
-				if(_board.isPieceUnderThreat(_row, _column)) { return false; }
 				if(_board.isTempPieceUnderThreat(_row, _column, _row, _column + 1)) { return false; }
 				if(_board.isTempPieceUnderThreat(_row, _column, _row, _column + 2)) { return false; }
 			}
 			if(deltaX == -2) {
-				if(_board.isPieceUnderThreat(_row, _column)) { return false; }
 				if(_board.isTempPieceUnderThreat(_row, _column, _row, _column - 1)) { return false; }
 				if(_board.isTempPieceUnderThreat(_row, _column, _row, _column - 2)) { return false; }
 			}
