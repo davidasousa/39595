@@ -16,6 +16,8 @@ namespace Student {
 				_type = Bishop;
 				_string = (color == White) ? (char*) u8"\u2657" : (char*) u8"\u265D" ;
 			}
+
+			virtual bool isValidCastle(int toRow, int toColumn, int* crX, int* crY) { return false; }
 			
 			virtual bool canMoveToLocation(int toRow, int toColumn) {
 				// Redundant Move

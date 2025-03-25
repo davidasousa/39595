@@ -15,6 +15,7 @@ namespace Student
 		int _column;
 		Type _type;
 		char* _string;
+		bool _hasMoved;
 
 	public:
 		/**
@@ -30,7 +31,13 @@ namespace Student
 		 * Starting column of the piece.
 		 */
 		ChessPiece(ChessBoard& board, Color color, int row, int column) :
-			_board(board), _color(color), _row(row), _column(column) {};
+			_board(board), _color(color), _row(row), _column(column), _hasMoved(false) {};
+
+		// Step 4 Functions
+		bool hasMoved() { return _hasMoved; }
+		void setMoved() { _hasMoved = true; }
+		virtual bool isValidCastle(int toRow, int toColumn, int* crX, int* crY) = 0;
+
 		/**
 		 * @brief
 		 * Default destructor for ChessPiece.

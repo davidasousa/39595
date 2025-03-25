@@ -85,10 +85,35 @@ void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startCol
 }
 
 bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn) {
+	int crX = -1;
+	int crY = -1;
 	ChessPiece* piece = board[fromRow][fromColumn];
 	if(piece == nullptr) { return false; }
 	if(turn != piece -> getColor()) { return false; }
 	if(piece -> getColor() != turn) { return false; } // Out Of Turn
+	// Check If Castling
+	if(piece -> getType() == King && piece -> isValidCastle(toRow, toColumn, &crX, &crY)) {
+		if(toColumn < fromColumn) {
+			// Move The King
+			board[fromRow][fromColumn] -> setPosition(toRow, fromColumn - 3);
+			board[toRow][fromColumn - 3] = board[fromRow][fromColumn];
+			board[fromRow][fromColumn] = nullptr;
+			// Move The Rook
+			board[crY][crX] -> setPosition(toRow, fromColumn - 2);
+			board[toRow][fromColumn - 2] = board[crY][crX];
+			board[crY][crX] = nullptr;
+		} else {
+			// Move The King
+			board[fromRow][fromColumn] -> setPosition(toRow, fromColumn + 3);
+			board[toRow][fromColumn + 3] = board[fromRow][fromColumn];
+			board[fromRow][fromColumn] = nullptr;
+			// Move The Rook
+			board[crY][crX] -> setPosition(toRow, fromColumn + 2);
+			board[toRow][fromColumn + 2] = board[crY][crX];
+			board[crY][crX] = nullptr;
+		}
+		return true;
+	}
 	if(!isValidMove(fromRow, fromColumn, toRow, toColumn)) { return false; } // Invalid Move
 
 	// If Capture -> Delete & Remove Piece
@@ -101,6 +126,8 @@ bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn)
 	// Changing Turn
 	if(turn == White) { turn = Black; }
 	else if(turn == Black) { turn = White; }
+	// Setting The Moved Flag
+	if(piece -> hasMoved() == false) { piece -> setMoved(); }
 	return true;
 }
 
@@ -166,7 +193,7 @@ bool ChessBoard::isTempPieceUnderThreat(int fromRow, int fromCol, int toRow, int
 	// End Two King Touching
 
 	delete board[toRow][toCol];
-	delete board[fromRow][fromCol];
+//	delete board[fromRow][fromCol];
 	board[toRow][toCol] = nullptr;
 	board[fromRow][fromCol] = nullptr;
 
@@ -176,6 +203,7 @@ bool ChessBoard::isTempPieceUnderThreat(int fromRow, int fromCol, int toRow, int
 
 	// Restoring Board
 	delete board[toRow][toCol];
+	board[toRow][toCol] = nullptr;
 	board[toRow][toCol] = tempPiece;
 	board[fromRow][fromCol] = tempKing;
 

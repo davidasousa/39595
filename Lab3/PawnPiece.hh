@@ -20,6 +20,8 @@ namespace Student
 				_type = Pawn;
 				_string = (color == White) ? (char*) u8"\u2659" : (char*) u8"\u265F";
 			}
+
+			virtual bool isValidCastle(int toRow, int toColumn, int* crX, int* crY) { return false; }
 			
 			virtual bool canMoveToLocation(int toRow, int toColumn) {
 				// Redundant Move

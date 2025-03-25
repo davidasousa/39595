@@ -40,6 +40,68 @@ namespace Student
 			return true;
 		}
 
+		virtual bool isValidCastle(int toRow, int toColumn, int* crX, int* crY) {
+			if(_hasMoved == true) { return false; }
+			// Invalid Moves
+			if(toRow == _row && toColumn == _column) { return false; }
+			if(toRow != _row) { return false; }
+			// Check Movement Within Bounds
+			if(toRow <= -1 || toRow >= _board.getNumRows()) { return false; }
+			if(toColumn <= -1 || toColumn >= _board.getNumCols()) { return false; }
+
+			ChessPiece* castleRook = nullptr;
+			// Check King Moved 2 Columns
+			int deltaX = toColumn - _column;
+			if(deltaX == -2) {
+				// Ensure No Piece Between The Rook & King
+				for(int idx = _column - 1; idx != -1; idx--) {
+					ChessPiece* piece = _board.getPiece(_row, idx);
+					if(piece != nullptr) { 
+						if(piece -> getType() == Rook && piece -> getColor() == _color) { 
+							castleRook = piece; 
+							break;
+						} else { return false; }
+					}
+				}
+			} else if(deltaX == 2) {
+				// Ensure No Piece Between The Rook & King
+				for(int idx = _column + 1; idx != _board.getNumRows(); idx++) {
+					ChessPiece* piece = _board.getPiece(_row, idx);
+					if(piece != nullptr) { 
+						if(piece -> getType() == Rook && piece -> getColor() == _color) { 
+							castleRook = piece; 
+							break;
+						} else { return false; }
+					} 		
+				}
+			} else { return false; }
+
+			// No Valid Rook Was Found
+			if(castleRook == nullptr) { return false; }
+			// If The King & Rook Were Within Two Squares Of Each Other
+			if(abs(castleRook -> getColumn() - _column) <= 2) { return false; }
+
+			// Check If The King Would Be Under Threat
+			if(deltaX == 2) {
+				if(_board.isTempPieceUnderThreat(_row, _column, _row, _column + 1)) { return false; }
+				if(_board.isTempPieceUnderThreat(_row, _column, _row, _column + 2)) { return false; }
+				if(_board.isTempPieceUnderThreat(_row, _column, _row, _column + 3)) { return false; }
+			}
+			if(deltaX == -2) {
+				if(_board.isTempPieceUnderThreat(_row, _column, _row, _column - 1)) { return false; }
+				if(_board.isTempPieceUnderThreat(_row, _column, _row, _column - 2)) { return false; }
+				if(_board.isTempPieceUnderThreat(_row, _column, _row, _column - 3)) { return false; }
+			}
+
+			// Set Moved Flags
+			castleRook -> setMoved();
+			_hasMoved = true;
+			// Passing The Rook Info
+			*crY = castleRook -> getRow();
+			*crX = castleRook -> getColumn();
+			return true;
+		}
+
 		virtual const char *toString() { return _string; }	
 	};
 }
