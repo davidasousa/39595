@@ -85,8 +85,7 @@ void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startCol
 }
 
 bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn) {
-	int crX = -1;
-	int crY = -1;
+	int crX = -1; int crY = -1;
 	ChessPiece* piece = board[fromRow][fromColumn];
 	if(piece == nullptr) { return false; }
 	if(turn != piece -> getColor()) { return false; }

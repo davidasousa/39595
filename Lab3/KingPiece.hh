@@ -83,14 +83,14 @@ namespace Student
 
 			// Check If The King Would Be Under Threat
 			if(deltaX == 2) {
+				if(_board.isPieceUnderThreat(_row, _column)) { return false; }
 				if(_board.isTempPieceUnderThreat(_row, _column, _row, _column + 1)) { return false; }
 				if(_board.isTempPieceUnderThreat(_row, _column, _row, _column + 2)) { return false; }
-				if(_board.isTempPieceUnderThreat(_row, _column, _row, _column + 3)) { return false; }
 			}
 			if(deltaX == -2) {
+				if(_board.isPieceUnderThreat(_row, _column)) { return false; }
 				if(_board.isTempPieceUnderThreat(_row, _column, _row, _column - 1)) { return false; }
 				if(_board.isTempPieceUnderThreat(_row, _column, _row, _column - 2)) { return false; }
-				if(_board.isTempPieceUnderThreat(_row, _column, _row, _column - 3)) { return false; }
 			}
 
 			// Passing The Rook Info
