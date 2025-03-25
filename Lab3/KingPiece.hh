@@ -93,9 +93,6 @@ namespace Student
 				if(_board.isTempPieceUnderThreat(_row, _column, _row, _column - 3)) { return false; }
 			}
 
-			// Set Moved Flags
-			castleRook -> setMoved();
-			_hasMoved = true;
 			// Passing The Rook Info
 			*crY = castleRook -> getRow();
 			*crX = castleRook -> getColumn();

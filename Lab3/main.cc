@@ -417,10 +417,13 @@ int test_part4_8x8_2() {
 	Student::ChessBoard sBoard(8, 8);
 	sBoard.createChessPiece(White, Rook, 0, 7);
 	sBoard.createChessPiece(White, King, 0, 3);
+	sBoard.createChessPiece(White, Rook, 0, 0);
 	sBoard.createChessPiece(Black, Rook, 2, 5);
 
 	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(sBoard.movePiece(0,3,0,5)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(!sBoard.movePiece(0,3,0,1)) { return 1; }
 	std::cout << sBoard.displayBoard().str() << std::endl;
 
 	return 0;
