@@ -85,7 +85,7 @@ void ChessBoard::createChessPiece(Color col, Type ty, int startRow, int startCol
 }
 
 bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn) {
-	ChessPiece* piece = board[fromRow][toRow];
+	ChessPiece* piece = board[fromRow][fromColumn];
 	if(piece == nullptr) { return false; }
 	if(turn != piece -> getColor()) { return false; }
 	if(piece -> getColor() != turn) { return false; } // Out Of Turn
@@ -105,8 +105,9 @@ bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn)
 }
 
 bool ChessBoard::isValidMove(int fromRow, int fromColumn, int toRow, int toColumn) {
-	if(!board[fromRow][fromColumn] -> canMoveToLocation(toRow, toColumn)) { return false; }
-	if(board[fromRow][fromColumn] -> getType() == King) {
+	ChessPiece* piece = board[fromRow][fromColumn];
+	if(!piece -> canMoveToLocation(toRow, toColumn)) { return false; }
+	if(piece -> getType() == King) {
 		if(isTempPieceUnderThreat(fromRow, fromColumn, toRow, toColumn)) { return false; }
 	} else {
 		if(isMoveCauseCheck(fromRow, fromColumn, toRow, toColumn)) { return false; }

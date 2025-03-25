@@ -382,12 +382,29 @@ int test_part3_4x4_2() {
 	sBoard.createChessPiece(Black, King, 1 ,1);
 	sBoard.createChessPiece(White, King, 3 ,1);
 
-	std::cout << sBoard.displayBoard().str() << std::endl;
 	if(!sBoard.isPieceUnderThreat(3, 1)) { return 1; }
 	if(!sBoard.isPieceUnderThreat(1, 2)) { return 1; }
 
 	return 0;
 }
+
+int test_part3_4x4_3() {
+	Student::ChessBoard sBoard(4, 4);
+	sBoard.createChessPiece(White, Rook, 3, 2);
+	sBoard.createChessPiece(Black, Bishop, 1, 3);
+	sBoard.createChessPiece(Black, Rook, 1, 1);
+	sBoard.createChessPiece(White, Rook, 2, 3);
+	sBoard.createChessPiece(Black, King, 0 ,0);
+	sBoard.createChessPiece(White, King, 3 ,0);
+
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(!sBoard.movePiece(3,0,2,0)) { return 1; }
+	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(!sBoard.movePiece(1,3,0,2)) { return 1; }
+
+	return 0;
+}
+
 
 int main() {
 	/*
@@ -403,5 +420,6 @@ int main() {
 	*/
 	assert(test_part3_4x4_1() == 0);
 	assert(test_part3_4x4_2() == 0);
+	assert(test_part3_4x4_3() == 0);
 	return EXIT_SUCCESS;
 }
