@@ -428,7 +428,6 @@ int test_part4_8x8_2() {
 
 
 int main() {
-	/*
 	assert(test_part1_4x4_1() == 0);
 	assert(test_part1_4x4_2() == 0);
 	assert(test_part1_4x4_3() == 0);
@@ -441,7 +440,6 @@ int main() {
 	assert(test_part3_4x4_1() == 0);
 	assert(test_part3_4x4_2() == 0);
 	assert(test_part3_4x4_3() == 0);
-	*/
 	assert(test_part4_8x8_1() == 0);
 	assert(test_part4_8x8_2() == 0);
 	return EXIT_SUCCESS;

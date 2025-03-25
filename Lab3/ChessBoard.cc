@@ -231,7 +231,7 @@ bool ChessBoard::isMoveCauseCheck(int fromRow, int fromCol, int toRow, int toCol
 	// Saving And Taking Old Pieces Off Board
 	ChessPiece* tempFromPiece = (ChessPiece*) clone(fromRow, fromCol);
 	ChessPiece* tempToPiece = (ChessPiece*) clone(toRow, toCol);
-	delete board[fromRow][fromCol];
+//	delete board[fromRow][fromCol];
 	delete board[toRow][toCol];
 	board[fromRow][fromCol] = nullptr;
 	board[toRow][toCol] = nullptr;
