@@ -137,6 +137,10 @@ bool ChessBoard::movePiece(int fromRow, int fromColumn, int toRow, int toColumn)
 
 bool ChessBoard::isValidMove(int fromRow, int fromColumn, int toRow, int toColumn) {
 	ChessPiece* piece = board[fromRow][fromColumn];
+	int crX = -1; int crY = -1;
+	if(piece -> getType() == King && piece -> isValidCastle(toRow, toColumn, &crX, &crY)) {
+		return true;
+	}
 	if(!piece -> canMoveToLocation(toRow, toColumn)) { return false; }
 	if(piece -> getType() == King) {
 		if(isTempPieceUnderThreat(fromRow, fromColumn, toRow, toColumn)) { return false; }

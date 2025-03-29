@@ -444,16 +444,23 @@ int test_part4_8x8_3() {
 
 int test_part4_8x8_4() {
 	Student::ChessBoard sBoard(8, 8);
-	sBoard.createChessPiece(Black, Rook, 0, 7);
+	sBoard.createChessPiece(White, Pawn, 2, 3);
+	sBoard.createChessPiece(White, Pawn, 6, 6);
+	sBoard.createChessPiece(Black, Pawn, 4, 2);
+	sBoard.createChessPiece(White, Pawn, 6, 5);
+	sBoard.createChessPiece(Black, Pawn, 2, 0);
+	sBoard.createChessPiece(White, Pawn, 7, 0);
+	sBoard.createChessPiece(White, Bishop, 0, 3);
+	sBoard.createChessPiece(White, Bishop, 4, 3);
+	sBoard.createChessPiece(Black, King, 0, 4);
+	sBoard.createChessPiece(White, King, 7, 4);
 	sBoard.createChessPiece(Black, Rook, 0, 0);
-	sBoard.createChessPiece(Black, King, 0, 3);
-	sBoard.createChessPiece(White, Pawn, 1, 4);
+	sBoard.createChessPiece(Black, Rook, 0, 7);
+	sBoard.createChessPiece(White, Rook, 7, 0);
+	sBoard.createChessPiece(White, Rook, 7, 7);
 
 	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(0,3,0,5)) { return 1; }
-	std::cout << sBoard.displayBoard().str() << std::endl;
-	if(sBoard.movePiece(0,3,0,1)) { return 1; }
-	std::cout << sBoard.displayBoard().str() << std::endl;
+	if(!sBoard.isValidMove(7,4,7,2)) { return 1; }
 
 	return 0;
 }
