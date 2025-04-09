@@ -78,9 +78,9 @@ class polynomial
 		 */
 
 		 polynomial& operator+(const polynomial &other); // Sum Two Polynomials
-		 polynomial& operator+(const int& other); // Plus Constant Term
+		 //polynomial& operator+(const int& other); // Plus Constant Term
 		 polynomial& operator*(const polynomial &other); // Mult Two Polynomials
-		 polynomial& operator%(const polynomial &other); // A Mod B
+		 //polynomial& operator%(const polynomial &other); // A Mod B
 
 		/**
 		 * @brief Returns the degree of the polynomial
@@ -113,7 +113,7 @@ class polynomial
 		std::vector<std::pair<power, coeff>> canonical_form() const;
 
 	private:
-		std::vector<std::pair<coeff, power>> poly_vec;
+		std::vector<std::pair<power, coeff>> poly;
 };
 
 #endif
