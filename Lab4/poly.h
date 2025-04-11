@@ -123,5 +123,4 @@ class polynomial
 polynomial operator+(const int& other, const polynomial& poly); 
 polynomial operator*(const int& other, const polynomial& poly); 
 
-
 #endif

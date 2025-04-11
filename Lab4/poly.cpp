@@ -3,10 +3,6 @@
 
 #define ZERO_CONST std::pair<power, coeff>{0, 0}
 
-// Assumptions For Polynomial Pair Vectors
-// The Vector Will Be Ordered By Ascending Degrees
-// EX: 3 + 1x^2 + 0x^2 + 3x^3 ... 
-
 // Helper For Sorting Polynomials By Degree
 std::vector<std::pair<power, coeff>>&
 sort_degree(std::vector<std::pair<power, coeff>>& poly) {
@@ -37,9 +33,12 @@ merge_poly(std::vector<std::pair<power, coeff>>& poly) {
 		if(it -> second == 0) {
 			poly.erase(it);
 			continue;
-		} else if (it -> first == (it + 1) -> first) { // Merging Like Terms
+		}
+
+		if(it -> first == (it + 1) -> first) {
 			it -> second += (it + 1) -> second;
 			poly.erase(it + 1);
+			continue;
 		}
 		it++;
 	}

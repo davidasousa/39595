@@ -12,8 +12,7 @@ int test_canonical();
 std::optional<double> poly_test(
 	polynomial& p1,
 	polynomial& p2,
-	std::vector<std::pair<power, coeff>> solution) 
-	{
+	std::vector<std::pair<power, coeff>> solution) {
 
 	std::chrono::steady_clock::time_point begin = std::chrono::steady_clock::now();
 
@@ -46,7 +45,8 @@ int main()
 	assert(test_canonical() == 0);
 
 	std::optional<double> result = poly_test(p1, p2, solution);
-
+	
+	/*
 	if (result.has_value())
 	{
 		std::cout << "Passed test, took " << result.value()/1000 << " seconds" << std::endl;
@@ -55,5 +55,6 @@ int main()
 	{
 		std::cout << "Failed test" << std::endl;
 	}
+	*/
 	return 0;
 }
