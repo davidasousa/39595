@@ -80,6 +80,7 @@ class polynomial
 		 polynomial operator+(const polynomial &other); // Sum Two Polynomials
 		 polynomial operator+(const int& other); // Plus Constant Term
 		 polynomial operator*(const polynomial &other); // Mult Two Polynomials
+		 polynomial operator*(const int& other); // Mult Constant Term
 		 //polynomial& operator%(const polynomial &other); // A Mod B
 
 		/**

@@ -49,6 +49,11 @@ int test1() {
 	if((p5 * p6).canonical_form() != ans7) { return 1; }
 	if((p6 * p5).canonical_form() != ans7) { return 1; }
 
+	std::vector<std::pair<power, coeff>> ans8 = {{0, 0}};
+	if((p5 * p7).canonical_form() != ans8) { return 1; }
+
+	std::vector<std::pair<power, coeff>> ans9 = {{2, 3}, {1, 3}, {0, 6}};
+	if((p3 * 3).canonical_form() != ans9) { return 1; }
 
 	return 0;
 }

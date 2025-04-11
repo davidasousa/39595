@@ -119,18 +119,25 @@ polynomial polynomial::operator*(const polynomial &other) {
 				it.first + jt.first, 
 				it.second * jt.second
 			};
-			//std::cout << term.first << term.second << std::endl;
 
 			std::vector<std::pair<coeff, power>> term_vec = { term };
-			product = product + polynomial(term_vec.begin(), term_vec.end());
-			//product.print();
-			//std::cout << std::endl;
+			if(term.second != 0) { 
+				product = product + polynomial(term_vec.begin(), term_vec.end());
+			}
 		}
 	}
 	
 	// Remove Lingering 0x^0
 	if(product.poly.back() == ZERO_CONST) { product.poly.pop_back(); }
-	return product;
+	// Return Empty Polynomial As 0x^0
+	if(product.poly.size() == 0) { return polynomial{}; } 
+	else { return product; }
+}
+
+polynomial polynomial::operator*(const int& other) {
+	std::vector<std::pair<power, coeff>> new_poly;
+	for(auto it : poly) { new_poly.push_back({it.first, it.second * other}); }
+	return polynomial(new_poly.begin(), new_poly.end());
 }
 
 // Returns The Degree Of The Polynomial
