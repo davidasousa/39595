@@ -96,13 +96,6 @@ polynomial polynomial::operator+(const polynomial &other) const {
 	auto other_it = other.poly.begin();
 
 	while(self_it != poly.end() && other_it != other.poly.end()) {
-		/*
-		std::cout << self_it -> first << self_it -> second;
-		std::cout << " ";
-		std::cout << other_it -> first << other_it -> second;
-		std::cout << std::endl;
-		*/
-
 		// Adding Shared Terms
 		if(self_it -> first == other_it -> first) {
 			if(self_it -> second + other_it -> second != 0) {
@@ -119,15 +112,24 @@ polynomial polynomial::operator+(const polynomial &other) const {
 	}
 
 	while(self_it != poly.end()) { sum.push_back(*self_it++); }
-	while(other_it != other.poly.end()) { sum.push_back(*other_it++); }
-	
+	while(other_it != other.poly.end()) { sum.push_back(*other_it++); }	
 	return polynomial(sum.begin(), sum.end());
 }
 
 polynomial 
 polynomial::operator+(const int& other) const {
+	if(other == 0) { return *this; }
+
 	std::vector<std::pair<power, coeff>> new_poly = poly;
-	new_poly.back().second = new_poly.back().second + other;
+	// Zero Term Already Present
+	for(auto it = new_poly.begin(); it != new_poly.end(); it++) {
+		if(it -> first == 0) { 
+			it -> second += other; 
+			return polynomial(new_poly.begin(), new_poly.end());
+		}
+	}
+	// Zero Term Not Found
+	new_poly.push_back({0, other});
 	return polynomial(new_poly.begin(), new_poly.end());
 }
 
