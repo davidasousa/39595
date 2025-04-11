@@ -29,19 +29,22 @@ sort_degree(std::vector<std::pair<power, coeff>>& poly) {
 // Helper For Merging Like Terms && Removing 0 Coeff Terms
 std::vector<std::pair<power, coeff>>&
 merge_poly(std::vector<std::pair<power, coeff>>& poly) {
-	for(auto it = poly.begin(); it != poly.end() - 1;) { // Removing 0 Coeff Terms
+	for(auto it = poly.begin(); it != poly.end();) { // Removing 0 Coeff Terms
 		if(it -> second == 0) {
 			poly.erase(it);
 			continue;
 		}
 
+		if(it + 1 == poly.end()) { break; }
 		if(it -> first == (it + 1) -> first) {
-			it -> second += (it + 1) -> second;
-			poly.erase(it + 1);
+			(it + 1) -> second += it -> second;
+			poly.erase(it);
 			continue;
 		}
 		it++;
 	}
+
+	if(poly.size() == 0) { poly = {{0, 0}}; }
 	return poly;
 }
 
@@ -213,7 +216,6 @@ polynomial::operator%(const polynomial &other) const {
 	// Multiply By Divisor - Quotient * Divisor
 	polynomial quotient_divisor = quotient_poly * other;
 	// Subtract Divident By Quotient 
-	(-1 * quotient_divisor).print();
 	remainder = remainder + (-1 * quotient_divisor);
 
 	return remainder;

@@ -21,7 +21,6 @@ int test_addition() {
 	if((p3 + 3).canonical_form() != ans2) { return 1; }
 
 	std::vector<std::pair<power, coeff>> ans3 = {{2, 1}};
-	(p3 + 0).print();
 	if((p3 + 0).canonical_form() != ans3) { return 1; }
 
 	return 0;
