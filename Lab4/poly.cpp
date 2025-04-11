@@ -114,7 +114,7 @@ polynomial polynomial::operator+(const int& other) {
 polynomial operator+(const int& other, polynomial& poly) { return poly + other; }
 
 // Multiply Two Polynomials
-polynomial polynomial::operator*(const polynomial &other) {
+polynomial polynomial::operator*(polynomial &other) {
 	polynomial product;
 
 	for(auto it : poly) {
