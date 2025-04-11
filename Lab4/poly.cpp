@@ -69,7 +69,7 @@ polynomial& polynomial::operator=(const polynomial &other) {
 }
 
 // Sum Two Polynomials // Was A Ref Being Returned
-polynomial polynomial::operator+(const polynomial &other) {
+polynomial polynomial::operator+(const polynomial &other) const {
 	// Assigning The Larger Of The Two Polynomials
 	std::vector<std::pair<power, coeff>> sum;
 
@@ -105,16 +105,19 @@ polynomial polynomial::operator+(const polynomial &other) {
 	return polynomial(sum.begin(), sum.end());
 }
 
-polynomial polynomial::operator+(const int& other) {
+polynomial 
+polynomial::operator+(const int& other) const {
 	std::vector<std::pair<power, coeff>> new_poly = poly;
 	new_poly.back().second = new_poly.back().second + other;
 	return polynomial(new_poly.begin(), new_poly.end());
 }
 
-polynomial operator+(const int& other, polynomial& poly) { return poly + other; }
+polynomial 
+operator+(const int& other, const polynomial& poly) { return poly + other; }
 
 // Multiply Two Polynomials
-polynomial polynomial::operator*(polynomial &other) {
+polynomial 
+polynomial::operator*(const polynomial &other) const {
 	polynomial product;
 
 	for(auto it : poly) {
@@ -139,18 +142,18 @@ polynomial polynomial::operator*(polynomial &other) {
 }
 
 polynomial 
-polynomial::operator*(const int& other) {
+polynomial::operator*(const int& other) const {
 	std::vector<std::pair<power, coeff>> new_poly;
 	for(auto it : poly) { new_poly.push_back({it.first, it.second * other}); }
 	return polynomial(new_poly.begin(), new_poly.end());
 }
 
 polynomial 
-operator*(const int& other, polynomial& poly) { return poly * other; }
+operator*(const int& other, const polynomial& poly) { return poly * other; }
 
 // Polynomial Modulus
 polynomial 
-polynomial::operator%(const polynomial &other) {
+polynomial::operator%(const polynomial &other) const {
 	polynomial remainder(*this);
 	
 	while(remainder.find_degree_of() >= find_degree_of()) {

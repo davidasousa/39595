@@ -77,13 +77,13 @@ class polynomial
 		 * 1. polynomial % polynomial
 		 */
 
-		 polynomial operator+(const polynomial &other); 
-		 polynomial operator+(const int& other); 
+		 polynomial operator+(const polynomial &other) const; 
+		 polynomial operator+(const int& other) const; 
 
-		 polynomial operator*(const polynomial &other); 
-		 polynomial operator*(const int& other); 
+		 polynomial operator*(const polynomial &other) const; 
+		 polynomial operator*(const int& other) const; 
 
-		 polynomial operator%(const polynomial &other);
+		 polynomial operator%(const polynomial &other) const;
 
 		/**
 		 * @brief Returns the degree of the polynomial
@@ -120,8 +120,8 @@ class polynomial
 };
 
 // Non Member Function
-polynomial operator+(const int& other, polynomial& poly); 
-polynomial operator*(const int& other, polynomial& poly); 
+polynomial operator+(const int& other, const polynomial& poly); 
+polynomial operator*(const int& other, const polynomial& poly); 
 
 
 #endif
