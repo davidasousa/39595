@@ -86,7 +86,9 @@ polynomial polynomial::operator+(const polynomial &other) {
 
 		// Adding Shared Terms
 		if(self_it -> first == other_it -> first) {
-			sum.push_back({self_it -> first, self_it -> second + other_it -> second});
+			if(self_it -> second + other_it -> second != 0) {
+				sum.push_back({self_it -> first, self_it -> second + other_it -> second});
+			}
 			self_it++; other_it++;
 		} else if(self_it -> first < other_it -> first) {
 			sum.push_back(*other_it);
@@ -108,6 +110,8 @@ polynomial polynomial::operator+(const int& other) {
 	new_poly.back().second = new_poly.back().second + other;
 	return polynomial(new_poly.begin(), new_poly.end());
 }
+
+polynomial operator+(const int& other, polynomial& poly) { return poly + other; }
 
 // Multiply Two Polynomials
 polynomial polynomial::operator*(const polynomial &other) {
@@ -134,10 +138,59 @@ polynomial polynomial::operator*(const polynomial &other) {
 	else { return product; }
 }
 
-polynomial polynomial::operator*(const int& other) {
+polynomial 
+polynomial::operator*(const int& other) {
 	std::vector<std::pair<power, coeff>> new_poly;
 	for(auto it : poly) { new_poly.push_back({it.first, it.second * other}); }
 	return polynomial(new_poly.begin(), new_poly.end());
+}
+
+polynomial 
+operator*(const int& other, polynomial& poly) { return poly * other; }
+
+// Polynomial Modulus
+polynomial 
+polynomial::operator%(const polynomial &other) {
+	polynomial remainder(*this);
+	
+	while(remainder.find_degree_of() >= find_degree_of()) {
+		// Finding Leading Terms
+		std::pair<power, coeff> lead_dividend = remainder.poly.front();
+		std::pair<power, coeff> lead_divisor = other.poly.front();
+
+		// Divide Leading Terms
+		std::vector<std::pair<power, coeff>> quotient = {{
+			lead_dividend.first - lead_divisor.first,
+			lead_dividend.second / lead_divisor.second
+		}};
+		polynomial quotient_poly(quotient.begin(), quotient.end());
+
+		// Multiply By Divisor - Quotient * Divisor
+		polynomial quotient_divisor = quotient_poly * other;
+
+		// Subtract Divident By Quotient 
+		remainder = remainder + (-1 * quotient_divisor);
+	}
+
+	// Repeat Steps One More Time
+	// Finding Leading Terms
+	std::pair<power, coeff> lead_dividend = remainder.poly.front();
+	std::pair<power, coeff> lead_divisor = other.poly.front();
+
+	// Divide Leading Terms
+	std::vector<std::pair<power, coeff>> quotient = {{
+		lead_dividend.first - lead_divisor.first,
+		lead_dividend.second / lead_divisor.second
+	}};
+	polynomial quotient_poly(quotient.begin(), quotient.end());
+
+	// Multiply By Divisor - Quotient * Divisor
+	polynomial quotient_divisor = quotient_poly * other;
+	// Subtract Divident By Quotient 
+	(-1 * quotient_divisor).print();
+	remainder = remainder + (-1 * quotient_divisor);
+
+	return remainder;
 }
 
 // Returns The Degree Of The Polynomial

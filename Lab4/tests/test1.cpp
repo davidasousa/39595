@@ -1,4 +1,5 @@
 #include "../poly.h"
+#include <iostream>
 
 int test1() {
 	// X + 1
@@ -22,6 +23,12 @@ int test1() {
 	// 0
 	std::vector<std::pair<power, coeff>> in7 = {{0, 0}};
 	polynomial p7(in7.begin(), in7.end());
+	// X^3 + 2X^1 + 1
+	std::vector<std::pair<power, coeff>> in8 = {{3, 1}, {1, 2}, {0, 1}};
+	polynomial p8(in8.begin(), in8.end());
+	// X + 1
+	std::vector<std::pair<power, coeff>> in9 = {{1, 1}, {0, 1}};
+	polynomial p9(in9.begin(), in9.end());
 	
 	// Testing Addition
 	std::vector<std::pair<power, coeff>> ans1 = {{1, 2}, {0, 3}};
@@ -36,6 +43,7 @@ int test1() {
 
 	std::vector<std::pair<power, coeff>> ans4 = {{1, 1}, {0, 7}};
 	if((p1 + 6).canonical_form() != ans4) { return 1; }
+	if((6 + p1).canonical_form() != ans4) { return 1; }
 
 	std::vector<std::pair<power, coeff>> ans5 = {{2, 1}, {1, 1}};
 	if((p5 + p6).canonical_form() != ans5) { return 1; }
@@ -54,6 +62,11 @@ int test1() {
 
 	std::vector<std::pair<power, coeff>> ans9 = {{2, 3}, {1, 3}, {0, 6}};
 	if((p3 * 3).canonical_form() != ans9) { return 1; }
+	if((3 * p3).canonical_form() != ans9) { return 1; }
+
+	// Testing Modulus
+	std::vector<std::pair<power, coeff>> ans10 = {{0, -2}};
+	if((p8 % p9).canonical_form() != ans10) { return 1; }
 
 	return 0;
 }

@@ -77,11 +77,13 @@ class polynomial
 		 * 1. polynomial % polynomial
 		 */
 
-		 polynomial operator+(const polynomial &other); // Sum Two Polynomials
-		 polynomial operator+(const int& other); // Plus Constant Term
-		 polynomial operator*(const polynomial &other); // Mult Two Polynomials
-		 polynomial operator*(const int& other); // Mult Constant Term
-		 //polynomial& operator%(const polynomial &other); // A Mod B
+		 polynomial operator+(const polynomial &other); 
+		 polynomial operator+(const int& other); 
+
+		 polynomial operator*(const polynomial &other); 
+		 polynomial operator*(const int& other); 
+
+		 polynomial operator%(const polynomial &other);
 
 		/**
 		 * @brief Returns the degree of the polynomial
@@ -116,5 +118,10 @@ class polynomial
 	private:
 		std::vector<std::pair<power, coeff>> poly;
 };
+
+// Non Member Function
+polynomial operator+(const int& other, polynomial& poly); 
+polynomial operator*(const int& other, polynomial& poly); 
+
 
 #endif
