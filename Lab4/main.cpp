@@ -7,6 +7,7 @@
 #include "poly.h"
 
 int test1();
+int test_canonical();
 
 std::optional<double> poly_test(
 	polynomial& p1,
@@ -42,6 +43,7 @@ int main()
 	polynomial p2(poly_input.begin(), poly_input.end());
 
 	assert(test1() == 0);
+	assert(test_canonical() == 0);
 
 	std::optional<double> result = poly_test(p1, p2, solution);
 

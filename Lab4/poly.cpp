@@ -30,6 +30,18 @@ sort_degree(std::vector<std::pair<power, coeff>>& poly) {
 	return poly;
 }
 
+// Helper For Merging Like Terms
+std::vector<std::pair<power, coeff>>&
+merge_poly(std::vector<std::pair<power, coeff>>& poly) {
+	for(auto it = poly.begin(); it != poly.end() - 1; it++) {
+		if(it -> first == (it + 1) -> first) {
+			it -> second += (it + 1) -> second;
+			poly.erase(it + 1);
+		}
+	}
+	return poly;
+}
+
 // Basic Constructor
 polynomial::polynomial() {
 	poly.clear();
@@ -204,5 +216,5 @@ polynomial::find_degree_of() const { return poly.size() - 1; }
 std::vector<std::pair<power, coeff>> 
 polynomial::canonical_form() const {
 	std::vector<std::pair<power, coeff>> new_poly = poly;
-	return sort_degree(new_poly);
+	return merge_poly(sort_degree(new_poly));
 }
