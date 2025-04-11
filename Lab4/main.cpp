@@ -53,4 +53,5 @@ int main()
 	{
 		std::cout << "Failed test" << std::endl;
 	}
+	return 0;
 }

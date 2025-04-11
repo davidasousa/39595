@@ -1,6 +1,8 @@
 #include "poly.h"
 #include <iostream>
 
+#define ZERO_CONST std::pair<power, coeff>{0, 0}
+
 // Assumptions For Polynomial Pair Vectors
 // The Vector Will Be Ordered By Ascending Degrees
 // EX: 3 + 1x^2 + 0x^2 + 3x^3 ... 
@@ -11,13 +13,13 @@ sort_degree(std::vector<std::pair<power, coeff>>& poly) {
 	// Insertion Sort Based On Power -> Ascending
 	for(int idx = 0; idx < poly.size(); idx++) {
 		int swap_idx = idx;
-		power min_degree = poly[idx].first;
+		power max_degree = poly[idx].first;
 
 		// Finding Smallest Power Between [Idx, Poly.Size]
 		for(int jdx = idx + 1; jdx < poly.size(); jdx++) {
-			if(poly[jdx].first < min_degree) { 
+			if(poly[jdx].first > max_degree) { 
 				swap_idx = jdx; 
-				min_degree = poly[jdx].first;
+				max_degree = poly[jdx].first;
 			}	
 		}
 
@@ -30,6 +32,7 @@ sort_degree(std::vector<std::pair<power, coeff>>& poly) {
 
 // Basic Constructor
 polynomial::polynomial() {
+	poly.clear();
 	poly.push_back({0, 0});
 }
 
@@ -37,8 +40,6 @@ polynomial::polynomial() {
 // Polynomials Always In Ascending Order Form
 template <typename Iter>
 polynomial::polynomial(Iter begin, Iter end) {
-	poly.clear();
-
 	for(auto it = begin; it != end; it++) { 
 		poly.push_back(*it); 
 	}
@@ -67,50 +68,69 @@ polynomial& polynomial::operator=(const polynomial &other) {
 	return *this;	
 }
 
-// Sum Two Polynomials
-polynomial& polynomial::operator+(const polynomial &other) {
-	size_t smaller_degree = std::min(find_degree_of(), other.find_degree_of());
-	size_t larger_degree = std::max(find_degree_of(), other.find_degree_of());
-
+// Sum Two Polynomials // Was A Ref Being Returned
+polynomial polynomial::operator+(const polynomial &other) {
 	// Assigning The Larger Of The Two Polynomials
-	std::vector<std::pair<power, coeff>> larger_poly = 
-		find_degree_of() > other.find_degree_of() ? 
-		this -> poly : 
-		other.poly ;
+	std::vector<std::pair<power, coeff>> sum;
 
-	// Adding Shared Terms
-	for(int idx = 0; idx <= smaller_degree; idx++) {
-		poly[idx].second += other.poly[idx].second;	
+	auto self_it = poly.begin();
+	auto other_it = other.poly.begin();
+
+	while(self_it != poly.end() && other_it != other.poly.end()) {
+		/*
+		std::cout << self_it -> first << self_it -> second;
+		std::cout << " ";
+		std::cout << other_it -> first << other_it -> second;
+		std::cout << std::endl;
+		*/
+
+		// Adding Shared Terms
+		if(self_it -> first == other_it -> first) {
+			sum.push_back({self_it -> first, self_it -> second + other_it -> second});
+			self_it++; other_it++;
+		} else if(self_it -> first < other_it -> first) {
+			sum.push_back(*other_it);
+			other_it++;
+		} else if(self_it -> first > other_it -> first) {
+			sum.push_back(*self_it);
+			self_it++;
+		}
 	}
 
-	// Adding Terms From Larger Polynomial
-	for(int idx = find_degree_of(); idx < larger_degree; idx++) {
-		poly.push_back(larger_poly[idx]);
-	}
+	while(self_it != poly.end()) { sum.push_back(*self_it++); }
+	while(other_it != other.poly.end()) { sum.push_back(*other_it++); }
+	
+	return polynomial(sum.begin(), sum.end());
+}
 
-	return *this;	
+polynomial polynomial::operator+(const int& other) {
+	std::vector<std::pair<power, coeff>> new_poly = poly;
+	new_poly.back().second = new_poly.back().second + other;
+	return polynomial(new_poly.begin(), new_poly.end());
 }
 
 // Multiply Two Polynomials
-polynomial& polynomial::operator*(const polynomial &other) {
-	size_t new_degree = find_degree_of() * other.find_degree_of();
-	polynomial new_poly;
+polynomial polynomial::operator*(const polynomial &other) {
+	polynomial product;
 
-	// Can Be Optimized With Whole Row Addition
 	for(auto it : poly) {
 		for(auto jt : other.poly) {
-			std::vector<std::pair<power, coeff>> new_term = {{ 
+			std::pair<power, coeff> term = { 
 				it.first + jt.first, 
-				it.second * jt.second 
-			}};
+				it.second * jt.second
+			};
+			//std::cout << term.first << term.second << std::endl;
 
-			new_poly = new_poly + polynomial(new_term.begin(), new_term.end());
-			new_poly.print();
+			std::vector<std::pair<coeff, power>> term_vec = { term };
+			product = product + polynomial(term_vec.begin(), term_vec.end());
+			//product.print();
+			//std::cout << std::endl;
 		}
 	}
 	
-	*this = new_poly;
-	return *this;
+	// Remove Lingering 0x^0
+	if(product.poly.back() == ZERO_CONST) { product.poly.pop_back(); }
+	return product;
 }
 
 // Returns The Degree Of The Polynomial
@@ -120,7 +140,6 @@ polynomial::find_degree_of() const { return poly.size() - 1; }
 // Returns Sorted Polynomial
 std::vector<std::pair<power, coeff>> 
 polynomial::canonical_form() const {
-	std::vector<std::pair<power, coeff>> new_poly;
-	for(auto it : poly) { new_poly.push_back(it); }
-	return new_poly;
+	std::vector<std::pair<power, coeff>> new_poly = poly;
+	return sort_degree(new_poly);
 }
