@@ -164,6 +164,8 @@ polynomial::operator*(const polynomial &other) const {
 
 polynomial 
 polynomial::operator*(const int& other) const {
+	if(other == 0) { return polynomial{}; }
+
 	std::vector<std::pair<power, coeff>> new_poly;
 	for(auto it : poly) { new_poly.push_back({it.first, it.second * other}); }
 	return polynomial(new_poly.begin(), new_poly.end());

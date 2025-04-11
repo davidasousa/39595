@@ -82,7 +82,11 @@ int test_canonical() {
 	std::vector<std::pair<power, coeff>> ans_dup_zero = {{1, 1}};
 	if(p_dup_zero.canonical_form() != ans_dup_zero) { return 1; }
 
+	std::vector<std::pair<power, coeff>> add_zero = {{2, 3}};
+	polynomial p_add_zero(add_zero.begin(), add_zero.end());
 
+	std::vector<std::pair<power, coeff>> ans_add_zero = {{2, 3}};
+	if((p_add_zero + 0).canonical_form() != ans_add_zero) { return 1; }
 
 	return 0;
 }
