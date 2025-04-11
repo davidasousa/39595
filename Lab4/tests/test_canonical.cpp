@@ -23,6 +23,14 @@ int test_canonical() {
 	std::vector<std::pair<power, coeff>> in6 = {{0, 5}, {0, 2}, {1, 1}, {0, 8}};
 	polynomial p7(in6.begin(), in6.end());
 
+	std::vector<std::pair<power, coeff>> in7 = {
+		{0, 5}, {0, 2}, {1, 1}, {0, 8}, {1, 4}, {1, 3}
+	};
+	polynomial p8(in7.begin(), in7.end());
+
+	std::vector<std::pair<power, coeff>> in8 = {{3, 0}, {2, 0}, {1, 0}, {0, 0}};
+	polynomial p9(in8.begin(), in8.end());
+
 	// Testing Canonical
 	std::vector<std::pair<power, coeff>> ans1 = {{0, 0}};
 	if(p1.canonical_form() != ans1) { return 1; }
@@ -42,6 +50,11 @@ int test_canonical() {
 
 	std::vector<std::pair<power, coeff>> ans5 = {{1, 1}, {0, 15}};
 	if(p7.canonical_form() != ans5) { return 1; }
+
+	std::vector<std::pair<power, coeff>> ans6 = {{1, 8}, {0, 15}};
+	if(p8.canonical_form() != ans6) { return 1; }
+
+	if(p9.canonical_form() != ans1) { return 1; }
 
 	return 0;
 }

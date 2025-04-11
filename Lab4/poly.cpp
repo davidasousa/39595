@@ -58,7 +58,7 @@ polynomial::polynomial(Iter begin, Iter end) {
 	for(auto it = begin; it != end; it++) { 
 		poly.push_back(*it); 
 	}
-	sort_degree(poly);
+	merge_poly(sort_degree(poly));
 }
 
 // Creating Polynomial From Another
