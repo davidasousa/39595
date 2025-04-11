@@ -30,14 +30,18 @@ sort_degree(std::vector<std::pair<power, coeff>>& poly) {
 	return poly;
 }
 
-// Helper For Merging Like Terms
+// Helper For Merging Like Terms && Removing 0 Coeff Terms
 std::vector<std::pair<power, coeff>>&
 merge_poly(std::vector<std::pair<power, coeff>>& poly) {
-	for(auto it = poly.begin(); it != poly.end() - 1; it++) {
-		if(it -> first == (it + 1) -> first) {
+	for(auto it = poly.begin(); it != poly.end() - 1;) { // Removing 0 Coeff Terms
+		if(it -> second == 0) {
+			poly.erase(it);
+			continue;
+		} else if (it -> first == (it + 1) -> first) { // Merging Like Terms
 			it -> second += (it + 1) -> second;
 			poly.erase(it + 1);
 		}
+		it++;
 	}
 	return poly;
 }

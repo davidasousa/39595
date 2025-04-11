@@ -14,6 +14,9 @@ int test_canonical() {
 	std::vector<std::pair<power, coeff>> in3 = {{2, 1}, {4, 7}, {2, 3}, {0, 1}};
 	polynomial p4(in3.begin(), in3.end());
 
+	std::vector<std::pair<power, coeff>> in4 = {{2, 1}, {4, 7}, {3, 0}, {0, 1}};
+	polynomial p5(in4.begin(), in4.end());
+
 	// Testing Canonical
 	std::vector<std::pair<power, coeff>> ans1 = {{0, 0}};
 	if(p1.canonical_form() != ans1) { return 1; }
@@ -21,6 +24,7 @@ int test_canonical() {
 
 	std::vector<std::pair<power, coeff>> ans2 = {{4, 7}, {2, 1}, {0,1}};
 	if(p3.canonical_form() != ans2) { return 1; }
+	if(p5.canonical_form() != ans2) { return 1; }
 
 	// Testing Merging
 	std::vector<std::pair<power, coeff>> ans3 = {{4, 7}, {2, 4}, {0,1}};
