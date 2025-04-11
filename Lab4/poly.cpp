@@ -55,6 +55,10 @@ polynomial::polynomial() {
 // Polynomials Always In Ascending Order Form
 template <typename Iter>
 polynomial::polynomial(Iter begin, Iter end) {
+	if(begin == end) { 
+		poly.push_back({0, 0});
+		return; 
+	}
 	for(auto it = begin; it != end; it++) { 
 		poly.push_back(*it); 
 	}

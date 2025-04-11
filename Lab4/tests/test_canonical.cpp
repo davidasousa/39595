@@ -31,6 +31,9 @@ int test_canonical() {
 	std::vector<std::pair<power, coeff>> in8 = {{3, 0}, {2, 0}, {1, 0}, {0, 0}};
 	polynomial p9(in8.begin(), in8.end());
 
+	std::vector<std::pair<power, coeff>> in9 = {{3, 2}, {2, 1}, {3, -2}, {0, 1}};
+	polynomial p10(in9.begin(), in9.end());
+
 	// Testing Canonical
 	std::vector<std::pair<power, coeff>> ans1 = {{0, 0}};
 	if(p1.canonical_form() != ans1) { return 1; }
@@ -55,6 +58,31 @@ int test_canonical() {
 	if(p8.canonical_form() != ans6) { return 1; }
 
 	if(p9.canonical_form() != ans1) { return 1; }
+
+	std::vector<std::pair<power, coeff>> ans9 = {{2, 1}, {0, 1}};
+	if(p10.canonical_form() != ans9) { return 1; }
+
+	// AI Prompted Test Cases
+
+	std::vector<std::pair<power, coeff>> in_empty = {};
+	polynomial p_empty(in_empty.begin(), in_empty.end());
+
+	std::vector<std::pair<power, coeff>> ans_empty = {{0, 0}};
+	if(p_empty.canonical_form() != ans_empty) { return 1; }
+
+	std::vector<std::pair<power, coeff>> in_cancel = {{3, 5}, {3, -5}, {0, 4}, {0, -4}};
+	polynomial p_cancel(in_cancel.begin(), in_cancel.end());
+
+	std::vector<std::pair<power, coeff>> ans_cancel = {{0, 0}};
+	if(p_cancel.canonical_form() != ans_cancel) { return 1; }
+
+	std::vector<std::pair<power, coeff>> in_dup_zero = {{2, 3}, {2, -3}, {1, 1}};
+	polynomial p_dup_zero(in_dup_zero.begin(), in_dup_zero.end());
+
+	std::vector<std::pair<power, coeff>> ans_dup_zero = {{1, 1}};
+	if(p_dup_zero.canonical_form() != ans_dup_zero) { return 1; }
+
+
 
 	return 0;
 }
