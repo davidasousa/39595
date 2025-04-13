@@ -160,11 +160,8 @@ polynomial::operator*(const polynomial &other) const {
 		}
 	}
 	
-	// Remove Lingering 0x^0
-	if(product.poly.back() == ZERO_CONST) { product.poly.pop_back(); }
-	// Return Empty Polynomial As 0x^0
-	if(product.poly.size() == 0) { return polynomial{}; } 
-	else { return product; }
+	product.poly = merge_poly(sort_degree(product.poly));
+	return product;
 }
 
 polynomial 
