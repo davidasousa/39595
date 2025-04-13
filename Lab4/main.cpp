@@ -10,6 +10,7 @@ int test1();
 int test_canonical();
 int test_addition();
 int test_mult();
+int test_complex();
 
 std::optional<double> poly_test(
 	polynomial& p1,
@@ -47,6 +48,7 @@ int main()
 	assert(test_canonical() == 0);
 	assert(test_addition() == 0);
 	assert(test_mult() == 0);
+	assert(test_complex() == 0);
 
 	std::optional<double> result = poly_test(p1, p2, solution);
 	

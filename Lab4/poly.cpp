@@ -1,4 +1,6 @@
 #include "poly.h"
+#include <chrono>
+#include <thread>
 #include <iostream>
 
 #define ZERO_CONST std::pair<power, coeff>{0, 0}
@@ -181,14 +183,24 @@ operator*(const int& other, const polynomial& poly) { return poly * other; }
 polynomial 
 polynomial::operator%(const polynomial &other) const {
 	polynomial remainder(*this);
+	// Mod 0
+	if(other.find_degree_of() == 0 && other.poly.front().second == 0) { 
+		return remainder; 
+	}
 	
-	while(remainder.find_degree_of() >= find_degree_of()) {
+	int divisor_degree = other.find_degree_of();
+	std::pair<power, coeff> lead_dividend;
+	std::pair<power, coeff> lead_divisor;
+	std::vector<std::pair<power, coeff>> quotient;
+
+	// Stop When The Remainder Has A Lesser Degree Than The Divisor
+	while(remainder.find_degree_of() >= divisor_degree) {
 		// Finding Leading Terms
-		std::pair<power, coeff> lead_dividend = remainder.poly.front();
-		std::pair<power, coeff> lead_divisor = other.poly.front();
+		lead_dividend = remainder.poly.front();
+		lead_divisor = other.poly.front();
 
 		// Divide Leading Terms
-		std::vector<std::pair<power, coeff>> quotient = {{
+		quotient = {{
 			lead_dividend.first - lead_divisor.first,
 			lead_dividend.second / lead_divisor.second
 		}};
@@ -199,31 +211,14 @@ polynomial::operator%(const polynomial &other) const {
 
 		// Subtract Divident By Quotient 
 		remainder = remainder + (-1 * quotient_divisor);
+		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
-
-	// Repeat Steps One More Time
-	// Finding Leading Terms
-	std::pair<power, coeff> lead_dividend = remainder.poly.front();
-	std::pair<power, coeff> lead_divisor = other.poly.front();
-
-	// Divide Leading Terms
-	std::vector<std::pair<power, coeff>> quotient = {{
-		lead_dividend.first - lead_divisor.first,
-		lead_dividend.second / lead_divisor.second
-	}};
-	polynomial quotient_poly(quotient.begin(), quotient.end());
-
-	// Multiply By Divisor - Quotient * Divisor
-	polynomial quotient_divisor = quotient_poly * other;
-	// Subtract Divident By Quotient 
-	remainder = remainder + (-1 * quotient_divisor);
-
 	return remainder;
 }
 
 // Returns The Degree Of The Polynomial
 size_t 
-polynomial::find_degree_of() const { return poly.size() - 1; }
+polynomial::find_degree_of() const { return poly.front().first; }
 
 // Returns Sorted Polynomial
 std::vector<std::pair<power, coeff>> 

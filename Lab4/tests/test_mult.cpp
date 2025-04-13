@@ -17,7 +17,6 @@ int test_mult() {
 	polynomial p3(in2.begin(), in2.end());
 
 	std::vector<std::pair<power, coeff>> ans2 = {{3, 20}, {2, 4}};
-	(p3 * 4).print();
 	if((p3 * 4).canonical_form() != ans2) { return 1; }
 
 	return 0;
