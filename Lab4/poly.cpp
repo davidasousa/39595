@@ -128,12 +128,13 @@ polynomial::operator+(const int& other) const {
 
 	std::vector<std::pair<power, coeff>> new_poly = poly;
 	// Zero Term Already Present
-	for(auto it = new_poly.begin(); it != new_poly.end(); it++) {
+	for(auto it = new_poly.rbegin(); it != new_poly.rend(); it++) {
 		if(it -> first == 0) { 
 			it -> second += other; 
 			return polynomial(new_poly.begin(), new_poly.end());
 		}
 	}
+
 	// Zero Term Not Found
 	new_poly.push_back({0, other});
 	return polynomial(new_poly.begin(), new_poly.end());
@@ -141,7 +142,6 @@ polynomial::operator+(const int& other) const {
 
 polynomial 
 operator+(const int& other, const polynomial& poly) { return poly + other; }
-
 
 void
 term_mult(
@@ -173,6 +173,7 @@ polynomial::operator*(const polynomial &other) const {
 	
 	for(auto it : other.poly) {
 		// Arguments -> Func, Arg1, Arg2 ...
+		// Assign Each Sub Term Its Own Thread
 		threads.push_back(std::thread(term_mult, poly, it, std::ref(product)));
 	}
 
