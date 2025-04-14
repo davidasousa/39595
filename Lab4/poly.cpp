@@ -1,9 +1,10 @@
 #include "poly.h"
-#include <chrono>
 #include <thread>
+#include <mutex>
 #include <iostream>
 
 #define ZERO_CONST std::pair<power, coeff>{0, 0}
+std::mutex mult_mutex;
 
 // Helper For Sorting Polynomials By Degree
 std::vector<std::pair<power, coeff>>&
@@ -141,24 +142,41 @@ polynomial::operator+(const int& other) const {
 polynomial 
 operator+(const int& other, const polynomial& poly) { return poly + other; }
 
+
+void
+term_mult(
+	const std::vector<std::pair<power, coeff>> poly, 
+	const std::pair<coeff, power> other_term,
+	polynomial& product
+) {
+
+	polynomial sub_product;
+	for(auto poly_term : poly) {
+		std::vector<std::pair<power, coeff>> term = {{ 
+			poly_term.first + other_term.first, 
+			poly_term.second * other_term.second
+		}};
+		sub_product = sub_product + polynomial(term.begin(), term.end());
+	}
+
+	// Adding To The Main Product
+	mult_mutex.lock();
+	product = product + sub_product;
+	mult_mutex.unlock();
+}
+
 // Multiply Two Polynomials
 polynomial 
 polynomial::operator*(const polynomial &other) const {
+	std::vector<std::thread> threads;
 	polynomial product;
-
-	for(auto it : poly) {
-		for(auto jt : other.poly) {
-			std::pair<power, coeff> term = { 
-				it.first + jt.first, 
-				it.second * jt.second
-			};
-
-			std::vector<std::pair<coeff, power>> term_vec = { term };
-			if(term.second != 0) { 
-				product = product + polynomial(term_vec.begin(), term_vec.end());
-			}
-		}
+	
+	for(auto it : other.poly) {
+		// Arguments -> Func, Arg1, Arg2 ...
+		threads.push_back(std::thread(term_mult, poly, it, std::ref(product)));
 	}
+
+	for(auto& th : threads) { th.join(); }
 	
 	product.poly = merge_poly(sort_degree(product.poly));
 	return product;

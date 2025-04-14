@@ -44,13 +44,19 @@ int main()
 	polynomial p1(poly_input.begin(), poly_input.end());
 	polynomial p2(poly_input.begin(), poly_input.end());
 
+	auto start = std::chrono::high_resolution_clock::now();
+
 	assert(test1() == 0);
 	assert(test_canonical() == 0);
 	assert(test_addition() == 0);
 	assert(test_mult() == 0);
 	assert(test_complex() == 0);
 
-	std::optional<double> result = poly_test(p1, p2, solution);
+	auto end = std::chrono::high_resolution_clock::now();
+	auto duration = std::chrono::duration_cast<std::chrono::milliseconds>(end - start);
+  std::cout << "Execution time: " << duration.count() << " milliseconds" << std::endl;
+
+	//std::optional<double> result = poly_test(p1, p2, solution);
 	
 	/*
 	if (result.has_value())

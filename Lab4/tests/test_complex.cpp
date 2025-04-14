@@ -19,7 +19,6 @@ int test_complex() {
 	polynomial p4(in4.begin(), in4.end());
 
 	std::vector<std::pair<power, coeff>> ans2 = {{1, -1}, {0, 2}};
-	std::cout << "Here\n----------\n";
 	if((p3 % p4).canonical_form() != ans2) { return 1; }
 
 	return 0;
