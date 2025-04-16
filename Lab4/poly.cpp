@@ -102,16 +102,18 @@ polynomial polynomial::operator+(const polynomial &other) const {
 	auto other_it = other.poly.begin();
 
 	while(self_it != poly.end() && other_it != other.poly.end()) {
+		power self_power = self_it -> first;
+		power other_power = other_it -> first;
 		// Adding Shared Terms
-		if(self_it -> first == other_it -> first) {
+		if(self_power == other_power) {
 			if(self_it -> second + other_it -> second != 0) {
-				sum.push_back({self_it -> first, self_it -> second + other_it -> second});
+				sum.push_back({self_power, self_it -> second + other_it -> second});
 			}
 			self_it++; other_it++;
-		} else if(self_it -> first < other_it -> first) {
+		} else if(self_power < other_power) {
 			sum.push_back(*other_it);
 			other_it++;
-		} else if(self_it -> first > other_it -> first) {
+		} else if(self_power > other_power) {
 			sum.push_back(*self_it);
 			self_it++;
 		}
@@ -145,7 +147,7 @@ operator+(const int& other, const polynomial& poly) { return poly + other; }
 
 void
 term_mult(
-	const std::vector<std::pair<power, coeff>> poly, 
+	const std::vector<std::pair<power, coeff>>& poly, 
 	const std::pair<coeff, power> other_term,
 	polynomial& product
 ) {
@@ -174,7 +176,9 @@ polynomial::operator*(const polynomial &other) const {
 	for(auto it : other.poly) {
 		// Arguments -> Func, Arg1, Arg2 ...
 		// Assign Each Sub Term Its Own Thread
-		threads.push_back(std::thread(term_mult, poly, it, std::ref(product)));
+		threads.push_back(std::thread(term_mult, 
+			std::ref(poly), it, std::ref(product)
+		));
 	}
 
 	for(auto& th : threads) { th.join(); }
