@@ -148,22 +148,6 @@ polynomial
 operator+(const int& other, const polynomial& poly) { return poly + other; }
 
 void
-term_add(
-	const std::pair<power, coeff>& poly_term,
-	const std::pair<power, coeff>& other_term,
-	polynomial& sub_product,
-	std::mutex& mtx
-) {
-	std::vector<std::pair<power, coeff>> term = {{ 
-		poly_term.first + other_term.first, 
-		poly_term.second * other_term.second
-	}};
-	mtx.lock();
-	sub_product = sub_product + polynomial(term.begin(), term.end());
-	mtx.unlock();
-}
-
-void
 term_mult(
 	const std::vector<std::pair<power, coeff>>& poly, 
 	const std::pair<coeff, power>& other_term,
@@ -171,20 +155,13 @@ term_mult(
 ) {
 
 	polynomial sub_product;
-	std::vector<std::thread> threads;
 
 	for(auto poly_term : poly) {
-		std::mutex mtx;
-		threads.push_back(std::thread(term_add, 
-			poly_term, 
-			other_term, 
-			std::ref(sub_product),
-			std::ref(mtx)
-		));
-	}
-
-	for(auto& th : threads) {
-		th.join();
+		std::vector<std::pair<power, coeff>> term = {{ 
+			poly_term.first + other_term.first, 
+			poly_term.second * other_term.second
+		}};
+		sub_product = sub_product + polynomial(term.begin(), term.end());
 	}
 
 	// Adding To The Main Product
@@ -211,7 +188,7 @@ polynomial::operator*(const polynomial &other) const {
 
 	for(auto& th : threads) { th.join(); }
 	
-	product.poly = merge_poly(sort_degree(product.poly));
+	//product.poly = merge_poly(sort_degree(product.poly));
 	return product;
 }
 
@@ -271,6 +248,7 @@ polynomial::find_degree_of() const { return poly.front().first; }
 // Returns Sorted Polynomial
 std::vector<std::pair<power, coeff>> 
 polynomial::canonical_form() const {
-	std::vector<std::pair<power, coeff>> new_poly = poly;
-	return merge_poly(sort_degree(new_poly));
+	//std::vector<std::pair<power, coeff>> new_poly = poly;
+	//return merge_poly(sort_degree(new_poly));
+	return poly;
 }
