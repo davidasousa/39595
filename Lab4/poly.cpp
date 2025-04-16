@@ -4,8 +4,6 @@
 #include <iostream>
 
 #define ZERO_CONST std::pair<power, coeff>{0, 0}
-
-std::mutex mult_add_mutex;
 std::mutex mult_mutex;
 
 // Helper For Sorting Polynomials By Degree
@@ -236,7 +234,6 @@ polynomial::operator%(const polynomial &other) const {
 
 		// Subtract Divident By Quotient 
 		remainder = remainder + (-1 * quotient_divisor);
-		std::this_thread::sleep_for(std::chrono::seconds(1));
 	}
 	return remainder;
 }
