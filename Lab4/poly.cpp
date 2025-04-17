@@ -146,6 +146,23 @@ polynomial
 operator+(const int& other, const polynomial& poly) { return poly + other; }
 
 void
+sub_mult(
+	const std::pair<power, coeff>& poly_term,
+	const std::pair<power, coeff>& other_term,
+	polynomial& sub_product,
+	std::mutex& mtx
+) {
+		std::vector<std::pair<power, coeff>> term = {{ 
+			poly_term.first + other_term.first, 
+			poly_term.second * other_term.second
+		}};
+
+		mtx.lock();
+		sub_product = sub_product + polynomial(term.begin(), term.end());
+		mtx.unlock();
+}
+
+void
 term_mult(
 	const std::vector<std::pair<power, coeff>>& poly, 
 	const std::pair<coeff, power>& other_term,
@@ -153,14 +170,20 @@ term_mult(
 ) {
 
 	polynomial sub_product;
+	std::vector<std::thread> threads;
+	std::mutex mtx;
 
-	for(auto poly_term : poly) {
-		std::vector<std::pair<power, coeff>> term = {{ 
-			poly_term.first + other_term.first, 
-			poly_term.second * other_term.second
-		}};
-		sub_product = sub_product + polynomial(term.begin(), term.end());
+	for(auto& poly_term : poly) {		
+		threads.push_back(std::thread(
+			sub_mult, 
+			poly_term, 
+			other_term, 
+			std::ref(sub_product), 
+			std::ref(mtx)
+		));
 	}
+
+	for(auto& th: threads) { th.join(); }
 
 	// Adding To The Main Product
 	mult_mutex.lock();
