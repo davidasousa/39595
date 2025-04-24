@@ -174,6 +174,7 @@ term_mult(
 	std::mutex mtx;
 
 	for(auto& poly_term : poly) {		
+		if(poly_term.first == 0) { continue; }
 		threads.push_back(std::thread(
 			sub_mult, 
 			poly_term, 
